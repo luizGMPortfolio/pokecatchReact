@@ -34,7 +34,7 @@ export const useFetchPokemons = () => {
   // deal with memory leak
   const [cancelled, setCancelled] = useState(false);
 
-  const filtersTypes = async (type, id) => {};
+  const filtersTypes = async (type, id) => { };
   const insertFilters = async () => {
     if (Filters) {
       try {
@@ -100,6 +100,7 @@ export const useFetchPokemons = () => {
           responseSpecies.data.evolution_chain.url
         );
 
+        console.log(responseEvolves)
         //GetPokemon
         var dataType = [];
         responsePoke.data.types.map((type) => {
@@ -122,7 +123,7 @@ export const useFetchPokemons = () => {
       }
 
       set(ref(database, "pokemons"), data);
-      return { data };
+
     } catch (error) {
       console.log(error);
     }
@@ -142,11 +143,17 @@ export const useFetchPokemons = () => {
   const GetEvolveStage = (evolves, poke) => {
 
     if (evolves.chain.evolves_to.length === 0) {
-      console.log(poke.name)
-      return "Unic";
-    }else{
-      return 'initial';
+      return "unic";
+    } else if (evolves.chain.species.name === poke.name) {
+      return 'Initial'
     }
+    else if (evolves.chain.evolves_to[0].species.name === poke.name) {
+      return 'medium'
+    }
+    else {
+      return "final"
+    }
+
 
   };
   useEffect(() => {
