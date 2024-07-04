@@ -1,12 +1,22 @@
-import './Background.css'
+/* eslint-disable react/prop-types */
+import "./Background.css";
+
+import Who from "../../assets/Backgrounds/Who.jpg";
 
 
-import Who from '../../assets/Backgrounds/Who.jpg'
+const Background = ({type}) => {
 
-const Background = () => {
+
   return (
-    <img src={Who} alt="" className='back'/>
-  )
-}
+    <>
+    {type === 'How' &&
+        <img src={Who} alt="" className="back" />
+    }
+    {type === 'Pokedex' &&
+        <div className="red"></div>
+    }
+    </>
+  );
+};
 
-export default Background
+export default Background;

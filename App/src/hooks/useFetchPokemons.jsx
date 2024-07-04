@@ -100,7 +100,6 @@ export const useFetchPokemons = () => {
           responseSpecies.data.evolution_chain.url
         );
 
-        console.log(responseEvolves)
         //GetPokemon
         var dataType = [];
         responsePoke.data.types.map((type) => {

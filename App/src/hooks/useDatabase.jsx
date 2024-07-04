@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 
 import { database } from "../firebase/config";
-import { ref, get, set } from "firebase/database";
+import { ref, get, set, child } from "firebase/database";
 
 export const useDatabase = () => {
   const [error, setError] = useState(null);
