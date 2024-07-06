@@ -1,0 +1,65 @@
+.auth {
+    width: 100%;
+    height: 100vh;
+    background-color: #545454;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .outher {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 10%;
+  }
+  
+  .division {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    gap: 2%;
+  }
+  
+  .google {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .google span {
+    background-color: #1c1c1c;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .Login .register {
+    color: #202020;
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

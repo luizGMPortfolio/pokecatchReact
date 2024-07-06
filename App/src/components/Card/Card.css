@@ -149,6 +149,9 @@
   .ocult{
     background-color: #393a3a;
   }
+  .ocult .img h1{
+    margin: auto;
+  }
   .ocultImg{
     filter:brightness(0);
   }

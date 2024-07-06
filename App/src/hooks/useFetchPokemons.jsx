@@ -3,13 +3,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { ref, set } from "firebase/database";
 import { database } from "../firebase/config";
+import { useDatabase } from "./useDatabase";
 //imports
 import axios from "axios";
 
+import pokebola from '../assets/pokebolas/padão.svg'
+import greatBall from '../assets/pokebolas/greatBall.svg'
+import ultraBall from '../assets/pokebolas/ultraBall.svg'
+import masterBall from '../assets/pokebolas/masterBall.svg'
+
+
 export const useFetchPokemons = () => {
+  const { LoadDatabase } = useDatabase();
+
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
-
   const [Filters, setFilters] = useState({});
   const filters = {
     bug: [],
@@ -34,7 +42,8 @@ export const useFetchPokemons = () => {
   // deal with memory leak
   const [cancelled, setCancelled] = useState(false);
 
-  const filtersTypes = async (type, id) => { };
+  //set filtrers para o db
+  const filtersTypes = async (type, id) => {};
   const insertFilters = async () => {
     if (Filters) {
       try {
@@ -64,26 +73,7 @@ export const useFetchPokemons = () => {
     }
   };
 
-  const FetchPokemon = async (rote, num, Allrote = null) => {
-    setLoading(true);
-
-    try {
-      if (Allrote) {
-        const response = await axios.get(Allrote);
-        return response.data;
-      } else {
-        const response = await axios.get(
-          "https://pokeapi.co/api/v2/" + rote + "/" + num + "/"
-        );
-        return response.data;
-      }
-    } catch (error) {
-      console.log(error);
-      setError(error.message);
-    }
-
-    setLoading(false);
-  };
+  //set pokemons para o db
   const FetchAllPokemons = async () => {
     const data = [];
     try {
@@ -116,18 +106,16 @@ export const useFetchPokemons = () => {
           },
           types: dataType,
           class: GetClass(responseSpecies.data),
-          stage: GetEvolveStage(responseEvolves, responsePoke.data)
+          stage: GetEvolveStage(responseEvolves, responsePoke.data),
         });
         //GetSpecie
       }
 
       set(ref(database, "pokemons"), data);
-
     } catch (error) {
       console.log(error);
     }
   };
-
   const GetClass = (specie) => {
     if (specie.is_legendary) {
       return "Legendary";
@@ -140,24 +128,149 @@ export const useFetchPokemons = () => {
     }
   };
   const GetEvolveStage = (evolves, poke) => {
-
     if (evolves.chain.evolves_to.length === 0) {
       return "unic";
     } else if (evolves.chain.species.name === poke.name) {
-      return 'Initial'
+      return "Initial";
+    } else if (evolves.chain.evolves_to[0].species.name === poke.name) {
+      return "medium";
+    } else {
+      return "final";
     }
-    else if (evolves.chain.evolves_to[0].species.name === poke.name) {
-      return 'medium'
-    }
-    else {
-      return "final"
+  };
+
+  //Busca URL pokeApi
+  const FetchPokemon = async (rote, num, Allrote = null) => {
+    setLoading(true);
+
+    try {
+      if (Allrote) {
+        const response = await axios.get(Allrote);
+        return response.data;
+      } else {
+        const response = await axios.get(
+          "https://pokeapi.co/api/v2/" + rote + "/" + num + "/"
+        );
+        return response.data;
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
     }
 
+    setLoading(false);
+  };
+  //Sorteia um numero aleatótio
+  const RandonNumber = (number) => {
+    return Math.floor(Math.random() * number);
+  };
+  //Busca um pokemon eleatório
+  const RandonPokemon = async () => {
+    if (cancelled) {
+      return;
+    }
+    setLoading(true);
+    try {
+      const response = await LoadDatabase('pokemons')
+      return response[RandonNumber(1025)];
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+  const RandonHowPokemons = async () => {
+    if (cancelled) {
+      return;
+    }
+    setLoading(true);
 
+    try {
+      const response = [];
+      const Data = await LoadDatabase('pokemons')
+
+      for (let index = 0; index < 4; index++) {
+        const num = RandonNumber(Data.length)
+
+        Data.map((item) => {
+          if(item.id === num){
+            response.push(item)
+          }
+        })
+      }
+      response.push(RandonNumber(4))
+      
+      return await response;
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    }
+    setLoading(false);
+  };
+
+
+  const RandonPokeball = async () => {
+    try {
+      const RandonNunber = Math.floor(Math.random() * 100);
+      var data = {};
+      if (RandonNunber === 0) {
+        data = {
+          imagem: masterBall,
+          quantidade: 1,
+          pokebolas: {
+            pokebola: 0,
+            great: 0,
+            ultra: 0,
+            master: 1,
+          },
+        };
+      } else if (RandonNunber <= 15) {
+        const RandonNunber = Math.floor(Math.random() * 2);
+        data = {
+          imagem: ultraBall,
+          quantidade: RandonNunber + 1,
+          pokebolas: {
+            pokebola: 0,
+            great: 0,
+            ultra: RandonNunber + 1,
+            master: 0,
+          },
+        };
+      } else if (RandonNunber <= 25) {
+        const RandonNunber = Math.floor(Math.random() * 3);
+        data = {
+          imagem: greatBall,
+          quantidade: RandonNunber + 2,
+          pokebolas: {
+            pokebola: 0,
+            great: RandonNunber + 2,
+            ultra: 0,
+            master: 0,
+          },
+        };
+      } else if (RandonNunber <= 100) {
+        const RandonNunber = Math.floor(Math.random() * 4);
+        data = {
+          imagem: pokebola,
+          quantidade: RandonNunber + 4,
+          pokebolas: {
+            pokebola: RandonNunber + 4,
+            great: 0,
+            ultra: 0,
+            master: 0,
+          },
+        };
+      }
+  
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  
   };
   useEffect(() => {
     return () => setCancelled(true);
   }, []);
 
-  return { FetchPokemon, FetchAllPokemons, insertFilters, loading, error };
+  return { FetchPokemon, RandonHowPokemons, RandonPokemon, RandonPokeball, loading, error };
 };

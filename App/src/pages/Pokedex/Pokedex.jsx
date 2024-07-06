@@ -23,11 +23,11 @@ function Pokedex() {
   const { LoadDatabase } = useDatabase();
 
   useEffect(() => {
-    async function GetData(){
-      setPokemons(await LoadDatabase('pokemons'))
+    async function GetData() {
+      setPokemons(await LoadDatabase("pokemons"));
     }
-    GetData()
-  },);
+    GetData();
+  });
 
   return (
     <>
@@ -275,19 +275,23 @@ function Pokedex() {
           </div>
           <div className="cards">
             <>
-            {pokemons && pokemons.map((pokemon) => (
-              <>
-                <Card
-                name={pokemon.name}
-                img={pokemon.sprite.padrão}
-                types={pokemon.types}
-                num={pokemon.id}
-              />
-              </>
-
-            ))}
+              {pokemons &&
+                pokemons.map((pokemon) => (
+                  <>
+                    {aba === "all" && (
+                      <>
+                        <Card
+                          name={pokemon.name}
+                          img={pokemon.sprite.padrão}
+                          types={pokemon.types}
+                          num={pokemon.id}
+                          Style={"Uncatch"}
+                        />
+                      </>
+                    )}
+                  </>
+                ))}
             </>
-
           </div>
         </div>
       </div>

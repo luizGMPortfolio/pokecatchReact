@@ -1,21 +1,47 @@
-import { useEffect } from "react";
+
+import "./How.css";
+
+import { useEffect, useState } from "react";
 import Navbar from "../../components/Navbar/Navbar";
 
-import { useDatabase } from "../../hooks/useDatabase";
 import { useFetchPokemons } from "../../hooks/useFetchPokemons";
 
-import Background from '../../components/Background/Background'
+import Background from "../../components/Background/Background";
+import Card from "../../components/Card/Card";
+import Game from "../../components/Game/Game";
 
 const How = () => {
-  const { LoadDatabase, addItem } = useDatabase();
-  const { FetchAllPokemons } = useFetchPokemons();
+  const { RandonHowPokemons } = useFetchPokemons();
+  const [num, setNum] = useState();
+  const [pokemon, setPokemon] = useState();
+  const [pokemons, setPokemons] = useState();
+  const [Stage, setStage] = useState();
 
-  
+  useEffect(() => {
+    async function sla() {
+      const data = await RandonHowPokemons();
+      console.log(data[4]);
+      setNum(data[4]);
+      setPokemon(data[data[4]]);
+      setPokemons(data);
+    }
+    sla();
+  }, []);
+
+  const CheckChoise = (choise) => {};
+
   return (
-    <div>
-      <Background  type={'How'}/>
+    <>
+      <Background type={"How"} />
       <Navbar />
-    </div>
+      <div className="How">
+        <div className="title">
+          <h3>Quem é esse</h3>
+          <h1>Pokemon?</h1>
+        </div>
+        <Game pokemons={pokemons} pokemon={pokemon}/>
+      </div>
+    </>
   );
 };
 

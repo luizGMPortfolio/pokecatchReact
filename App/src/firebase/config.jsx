@@ -2,22 +2,23 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getDatabase } from "firebase/database";
+import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB3GR0JHv1VRntBviVNc-MoWSPS4v4kaHk",
-  authDomain: "pokecatch-76be3.firebaseapp.com",
-  databaseURL: "https://pokecatch-76be3-default-rtdb.firebaseio.com",
-  projectId: "pokecatch-76be3",
-  storageBucket: "pokecatch-76be3.appspot.com",
-  messagingSenderId: "822870274518",
-  appId: "1:822870274518:web:7410923a11d2d958d87477"
+  apiKey: "AIzaSyD9J0KMEeVhc9QZwqkqKX1kG8Ca73oqZuk",
+  authDomain: "pokecatch1-1.firebaseapp.com",
+  projectId: "pokecatch1-1",
+  storageBucket: "pokecatch1-1.appspot.com",
+  messagingSenderId: "862766223897",
+  appId: "1:862766223897:web:37f4351056924c16c8d088",
+  measurementId: "G-DCN9B9S1BL"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
 const database = getDatabase(app)
+const analytics = getAnalytics(app);
 
-export {db, database};
+export {db, database, analytics};

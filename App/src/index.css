@@ -2,3 +2,66 @@ html,body{
   padding: 0;
   margin: 0;
 }
+
+ul{
+  padding: 0;
+  margin: 0;
+}
+
+li{
+  list-style: none;
+}
+input{
+  width: 300px;
+  height: 40px;
+  border-radius: 15px;
+  border: none;
+  padding-left: 10px
+}
+form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+label{
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.btn-default {
+  font-family: inherit;
+  padding: 10px;
+  border-radius: 20px;
+  border: 0;
+  background-color: #1c1c1c;
+  color: #fff;
+  cursor: pointer;
+}
+.btn-change{
+  padding: 0;
+  margin: 0;
+  box-shadow: none;
+  border: none;
+  min-height: inherit;
+  text-decoration: none;
+  color: #1c1c1c;
+}
+.btn-change::before{
+  box-shadow: none;
+}
+
+.Slackey{
+  font-family: "Slackey", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.white{
+  color: #fff;
+}
+.font-30{
+  font-size: 20px;
+}
