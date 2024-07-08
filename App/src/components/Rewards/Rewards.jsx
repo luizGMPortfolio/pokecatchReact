@@ -52,7 +52,7 @@ const Rewards = ({ rewards, setRewards, user }) => {
             pokebolas
         }
 
-        UpdateDocuments('itens', user.uid, DataItens)
+        UpdateDocuments('itens', documents.id, DataItens)
 
         setRewards(null)
 

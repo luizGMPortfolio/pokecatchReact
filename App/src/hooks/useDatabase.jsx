@@ -9,10 +9,6 @@ export const useDatabase = () => {
   const [loading, setLoading] = useState(null);
   const [cancelled, setCancelled] = useState(false);
 
-  function Ldatabase() {
-    console.log("deu certo");
-  }
-
   const LoadDatabase = async (path) => {
     if (cancelled) {
       return;

@@ -6,28 +6,22 @@
     background-repeat: no-repeat;
     background-position: center;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: start;
     align-items: center;
-    position: absolute;
-    z-index: 10;
+    gap: 15px;
 }
 
 .inicial footer {
-    position: fixed;
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100px;
-    bottom: 150px;
     justify-content: center;
     align-items: center;
-    gap: 10px;
 }
 
-.inicial .title{
-    position: fixed;
-    top: 30px;
-}
+
 .inicial .title h3{
     font-size: 30px;
 }

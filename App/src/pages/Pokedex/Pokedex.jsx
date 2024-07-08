@@ -1,8 +1,13 @@
 //css
 import "./Pokedex.css";
+
+
+//context
+import { useAuthValue } from "../../context/AuthContext";
 //hooks
 import { useEffect, useState } from "react";
 import { useDatabase } from "../../hooks/useDatabase";
+import { useCloud } from "../../hooks/useCloud";
 
 //components
 
@@ -18,16 +23,28 @@ function Pokedex() {
   const [Gen, setGen] = useState("Generations");
   const [Region, setRegion] = useState("Region");
   const [aba, setAba] = useState("seus");
+
   const [pokemons, setPokemons] = useState();
+  const [cards, setCards] = useState([]);
 
   const { LoadDatabase } = useDatabase();
+  const { documents, GetDocuments } = useCloud();
+  const { user } = useAuthValue();
+
 
   useEffect(() => {
-    async function GetData() {
+    async function LoadData() {
       setPokemons(await LoadDatabase("pokemons"));
+      await GetDocuments("itens", user.uid);
     }
-    GetData();
-  });
+    LoadData();
+  }, [user]);
+  useEffect(() => {
+    if (documents) {
+      setCards(documents.cards);
+    }
+  }, [documents]);
+
 
   return (
     <>
@@ -228,9 +245,8 @@ function Pokedex() {
               onMouseLeave={() => setShow("")}
             >
               <div
-                className={`select ${
-                  Region != "Region" ? Region : "Region"
-                } Region`}
+                className={`select ${Region != "Region" ? Region : "Region"
+                  } Region`}
               >
                 <h4>{Region}</h4>
               </div>
@@ -289,6 +305,23 @@ function Pokedex() {
                         />
                       </>
                     )}
+                    {aba === 'seus' && cards.map((card) => (
+                      <>
+                        {card.id === pokemon.id &&
+                          <>
+                            {cards &&
+                              <Card
+                                name={card.name}
+                                img={card.sprite.padrão}
+                                types={card.types}
+                                num={card.id}
+                              />
+                            }
+
+                          </>
+                        }
+                      </>
+                    ))}
                   </>
                 ))}
             </>
