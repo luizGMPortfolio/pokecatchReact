@@ -5,22 +5,22 @@ import pokeball from '../../assets/pokebolas/padão.svg'
 import great from '../../assets/pokebolas/greatBall.svg'
 import ultra from '../../assets/pokebolas/ultraBall.svg'
 
-const Game1 = ({ setStage, pokemons, pokemon }) => {
+const Game1 = ({ setStage, pokemons, pokemon, game}) => {
   return (
     <>
-      {!pokemons && (
+      {!game && (
         <div className="cardHow">
           <Card Style={"Back"} />
         </div>
       )}
-      {pokemon && (
+      {game && (
         <>
           <div className="cardHow">
             <Card
-              name={pokemon.name}
-              img={pokemon.sprite.padrão}
-              types={pokemon.types}
-              num={pokemon.id}
+              name={game.name}
+              img={game.sprite.padrão}
+              types={game.types}
+              num={game.id}
               Style={"Ocult"}
             />
           </div>

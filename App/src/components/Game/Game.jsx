@@ -1,23 +1,56 @@
 /* eslint-disable react/prop-types */
 import "./Game.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import { useAuthValue } from "../../context/AuthContext";
+import { useCloud } from "../../hooks/useCloud";
 
 import Inicial from "./Inicial";
 import Game2 from "./Game2";
 import Game1 from "./Game1";
-import Game3 from './Game3'
+import Game3 from "./Game3";
 
-const Game = ({ pokemons, pokemon }) => {
-  const [Stage, setStage] = useState('inicial');
+
+const Game = () => {
+  const { documents, GetDocuments } = useCloud();
+  const { user } = useAuthValue();
+
+  const [Stage, setStage] = useState("inicial");
+  const [Configs, setConfigs] = useState();
+
+  useEffect(() => {
+    async function LoadData() {
+      await GetDocuments("Configs", user.uid);
+    }
+    LoadData();
+  }, [user]);
+  useEffect(() => {
+    if(documents){
+      setConfigs(documents.Games);
+    }
+
+  }, [documents]);
 
   return (
     <>
-      {Stage === "inicial" && <Inicial setStage={setStage}/>}
-      {Stage === "Game1" && <Game1 setStage={setStage} pokemons={pokemons} pokemon={pokemon}/>}
-      {Stage === "Game2" && <Game2 setStage={setStage} pokemons={pokemons} pokemon={pokemon}/>}
-      {Stage === "Game3" && <Game3 setStage={setStage} pokemons={pokemons} pokemon={pokemon}/>}
+      {Configs && (
+        <>
+          {Stage === "inicial" && <Inicial setStage={setStage} />}
+          {Stage === "Game1" && (
+            <Game1
+              setStage={setStage}
+              game={Configs.game1}
+            />
+          )}
+          {Stage === "Game2" && (
+            <Game2 setStage={setStage} game={Configs.game2}/>
+          )}
+          {Stage === "Game3" && (
+            <Game3 setStage={setStage} game={Configs.game3}/>
+          )}
+        </>
+      )}
     </>
   );
 };

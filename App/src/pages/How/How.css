@@ -1,11 +1,11 @@
 .How {
   width: 100%;
-  height: 100vh;
-
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: center;
+  gap: 40px;
 }
 
 .title {
@@ -58,8 +58,11 @@
   display: flex;
   justify-content: center;
   align-items: start;
+  margin-bottom: 130px;
 }
 .choises ul {
+  min-width: 400px;
+  width: 60%;
   display: flex;
   list-style: none;
   gap: 20px;

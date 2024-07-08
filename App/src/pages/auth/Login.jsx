@@ -42,7 +42,7 @@ const Login = () => {
 
 
     return (
-        <div className='Login'>
+        <div className='auth'>
             <div className='logo'>
                 <img src={logo} alt="" />
             </div>
@@ -67,15 +67,15 @@ const Login = () => {
                             onChange={(e) => setpassword(e.target.value)} />
                     </label>
                     {!loading &&
-                        <button className='btn'>Login</button>
+                        <button className='btn-default'>Login</button>
                     }
                     {loading &&
-                        <button className='btn' disabled>Aguarde...</button>
+                        <button className='btn-default' disabled>Aguarde...</button>
                     }
                     {error && <p className='error'>{error}</p>}
                 </form>
                 <div className='register'>
-                    <Link to='/register'>Cadastrar-se</Link>
+                    <Link to='/register' className='btn-change'>Cadastrar-se</Link>
                 </div>
                 {error && <p className='error'>{error}</p>}
             </div>

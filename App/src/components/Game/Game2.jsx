@@ -1,7 +1,14 @@
 /* eslint-disable react/prop-types */
 import Card from "../Card/Card";
 
-const Game1 = ({ setStage, pokemons, pokemon }) => {
+import { useState } from "react";
+
+const Game1 = ({ setStage, game }) => {
+
+  const [pokemon] = useState(game[game[8]]);
+  const [pokemons] = useState(game);
+
+
   return (
     <>
       {!pokemons && (
@@ -45,6 +52,30 @@ const Game1 = ({ setStage, pokemons, pokemon }) => {
                 onClick={() => CheckChoise(pokemons[3].name)}
               >
                 {pokemons[3].name}
+              </li>
+              <li
+                className={pokemons[4].name}
+                onClick={() => CheckChoise(pokemons[4].name)}
+              >
+                {pokemons[4].name}
+              </li>
+              <li
+                className={pokemons[5].name}
+                onClick={() => CheckChoise(pokemons[5].name)}
+              >
+                {pokemons[5].name}
+              </li>
+              <li
+                className={pokemons[6].name}
+                onClick={() => CheckChoise(pokemons[6].name)}
+              >
+                {pokemons[6].name}
+              </li>
+              <li
+                className={pokemons[7].name}
+                onClick={() => CheckChoise(pokemons[7].name)}
+              >
+                {pokemons[7].name}
               </li>
             </ul>
           </div>

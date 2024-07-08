@@ -10,6 +10,7 @@ import {
 } from "firebase/firestore";
 
 export const useCloud = () => {
+  const [documents, setDocuments] = useState()
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
 
@@ -21,13 +22,13 @@ export const useCloud = () => {
       return;
     }
     setLoading(true);
-
+    console.log(data)
     const NewData = { ...data, createdAt: Timestamp.now() };
 
     try {
       const docRef = await addDoc(collection(db, collections), NewData);
-
       return docRef;
+
     } catch (error) {
       console.log(error.message);
       setError(error.message);
@@ -54,9 +55,7 @@ export const useCloud = () => {
     setLoading(false);
   };
   const GetDocuments = async (docCollection, uid = null) => {
-    if (cancelled) {
-      return;
-    }
+
     setLoading(true);
 
     const collectionRef = await collection(db, docCollection);
@@ -79,7 +78,7 @@ export const useCloud = () => {
           ...doc.data(),
         }));
 
-        return data[0].time;
+        setDocuments(data[0])
       });
     } catch (error) {
       console.log(error);
@@ -89,14 +88,12 @@ export const useCloud = () => {
     setLoading(false)
   };
 
-  useEffect(() => {
-    return () => setCancelled(true);
-  }, []);
 
   return {
     createDocuments,
     GetDocuments,
     UpdateDocuments,
+    documents,
     loading,
     error
   };

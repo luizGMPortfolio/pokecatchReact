@@ -112,6 +112,8 @@ export const useFetchPokemons = () => {
       }
 
       set(ref(database, "pokemons"), data);
+
+      console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -172,6 +174,7 @@ export const useFetchPokemons = () => {
     setLoading(true);
     try {
       const response = await LoadDatabase('pokemons')
+      console.log(response)
       return response[RandonNumber(1025)];
     } catch (error) {
       console.log(error);
@@ -189,7 +192,7 @@ export const useFetchPokemons = () => {
       const response = [];
       const Data = await LoadDatabase('pokemons')
 
-      for (let index = 0; index < 4; index++) {
+      for (let index = 0; index < 8; index++) {
         const num = RandonNumber(Data.length)
 
         Data.map((item) => {
@@ -198,16 +201,15 @@ export const useFetchPokemons = () => {
           }
         })
       }
-      response.push(RandonNumber(4))
+      response.push(RandonNumber(8))
       
-      return await response;
+      return response;
     } catch (error) {
       console.log(error);
       setError(error.message);
     }
     setLoading(false);
   };
-
 
   const RandonPokeball = async () => {
     try {
@@ -268,9 +270,7 @@ export const useFetchPokemons = () => {
     }
   
   };
-  useEffect(() => {
-    return () => setCancelled(true);
-  }, []);
 
-  return { FetchPokemon, RandonHowPokemons, RandonPokemon, RandonPokeball, loading, error };
+
+  return { FetchPokemon, RandonHowPokemons, RandonPokemon, RandonPokeball, FetchAllPokemons, loading, error };
 };
