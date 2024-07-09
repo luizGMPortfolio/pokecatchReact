@@ -3,6 +3,10 @@ import Card from "../Card/Card";
 
 import { useState } from "react";
 
+import pokeball from "../../assets/pokebolas/padão.svg";
+import great from "../../assets/pokebolas/greatBall.svg";
+import ultra from "../../assets/pokebolas/ultraBall.svg";
+
 const Game1 = ({ setStage, game }) => {
 
   const [pokemon, setPokemon] = useState(game[game[8]]);
@@ -25,6 +29,22 @@ const Game1 = ({ setStage, game }) => {
               num={pokemon.id}
               Style={"Ocult type"}
             />
+          </div>
+          <div className="trys">
+            <div className="Box1">
+              <span className="kanit white">Chances</span>
+              <ul>
+                <li>
+                  <img src={pokeball} alt="" />
+                </li>
+                <li>
+                  <img src={great} alt="" />
+                </li>
+                <li>
+                  <img src={ultra} alt="" />
+                </li>
+              </ul>
+            </div>
           </div>
           <div className="choises">
             <ul>

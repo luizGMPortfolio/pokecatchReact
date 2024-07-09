@@ -43,6 +43,7 @@
     align-items: center;
     gap: 2px;
     height: 10%;
+    margin-top: 30px;
 }
 .input i{
     padding: 13px;
@@ -66,24 +67,45 @@
 }
 
 .trys{
-    width: 250px;
+    gap: 20px;
     display: flex;
     justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 20px;
+
 }
+.trys .Box1,.trys .Box2{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
 .trys img{
     width: 25px;
 }
 .trys ul{
+    height: 100%;
     gap: 10px;
     display: flex;
     justify-content: space-around;
+    
+}
+.trys ul li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .tip{
-    width: 100px;
+    display: flex;
     background-color: #24242450;
     border-radius: 10px;
+    height: 100%;
+    padding: 5px;
 }
-
+.tip span{
+    opacity: 0;
+}
 .choises ul li img{
     width: 70px;
 }

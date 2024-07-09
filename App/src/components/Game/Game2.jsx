@@ -3,11 +3,25 @@ import Card from "../Card/Card";
 
 import { useState } from "react";
 
-const Game1 = ({ setStage, game }) => {
+import { useFetchPokemons } from "../../hooks/useFetchPokemons";
+
+
+import pokeball from "../../assets/pokebolas/padão.svg";
+import great from "../../assets/pokebolas/greatBall.svg";
+import ultra from "../../assets/pokebolas/ultraBall.svg";
+
+const Game1 = ({ setStage, game, setBackground, setRewards }) => {
+
+  const { RandonPokeball } = useFetchPokemons();
 
   const [pokemon] = useState(game[game[8]]);
   const [pokemons] = useState(game);
 
+  const [ChoiseError, setChoiseError] =useState()
+
+  const CheckChoise = async (choise) => {
+    setBackground('Errado')
+  };
 
   return (
     <>
@@ -26,6 +40,23 @@ const Game1 = ({ setStage, game }) => {
               num={pokemon.id}
               Style={"Ocult"}
             />
+          </div>
+          <div className="trys">
+            <div className="Box1">
+              <span className="kanit white">Chances</span>
+              <ul>
+                <li>
+                  <img src={pokeball} alt="" />
+                </li>
+                <li>
+                  <img src={great} alt="" />
+                </li>
+                <li>
+                  <img src={ultra} alt="" />
+                </li>
+              </ul>
+            </div>
+
           </div>
           <div className="choises">
             <ul>
@@ -79,6 +110,7 @@ const Game1 = ({ setStage, game }) => {
               </li>
             </ul>
           </div>
+
         </>
       )}
     </>

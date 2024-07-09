@@ -1,11 +1,11 @@
 /* eslint-disable react/prop-types */
 import Card from "../Card/Card";
 
-import pokeball from '../../assets/pokebolas/padão.svg'
-import great from '../../assets/pokebolas/greatBall.svg'
-import ultra from '../../assets/pokebolas/ultraBall.svg'
+import pokeball from "../../assets/pokebolas/padão.svg";
+import great from "../../assets/pokebolas/greatBall.svg";
+import ultra from "../../assets/pokebolas/ultraBall.svg";
 
-const Game1 = ({ setStage, pokemons, pokemon, game}) => {
+const Game1 = ({ setStage, game, setBackground }) => {
   return (
     <>
       {!game && (
@@ -25,16 +25,30 @@ const Game1 = ({ setStage, pokemons, pokemon, game}) => {
             />
           </div>
           <div className="input">
-          <input type="text" className="Slackey"/>
-          <i class="fa-solid fa-play"></i>
+            <input type="text" className="Slackey" />
+            <i class="fa-solid fa-play"></i>
           </div>
           <div className="trys">
-            <ul>
-                <li><img src={pokeball} alt="" /></li>
-                <li><img src={great} alt="" /></li>
-                <li><img src={ultra} alt="" /></li>
-            </ul>
-            <div className="tip"></div>
+            <div className="Box1">
+              <span className="kanit white">Chances</span>
+              <ul>
+                <li>
+                  <img src={pokeball} alt="" />
+                </li>
+                <li>
+                  <img src={great} alt="" />
+                </li>
+                <li>
+                  <img src={ultra} alt="" />
+                </li>
+              </ul>
+            </div>
+            <div className="Box2">
+              <span className="kanit white">Dica</span>
+              <div className="tip">
+                <span className="Slackey white">{game.name}</span>
+              </div>
+            </div>
           </div>
         </>
       )}
