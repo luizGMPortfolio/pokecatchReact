@@ -12,7 +12,7 @@ import Game1 from "./Game1";
 import Game3 from "./Game3";
 
 
-const Game = ({setBackground}) => {
+const Game = ({setBackground, setRewards}) => {
   const { documents, GetDocuments } = useCloud();
   const { user } = useAuthValue();
 
@@ -42,13 +42,14 @@ const Game = ({setBackground}) => {
               setStage={setStage}
               game={Configs.game1}
               setBackground={setBackground}
+              setRewards={setRewards}
             />
           )}
           {Stage === "Game2" && (
-            <Game2 setStage={setStage} game={Configs.game2} setBackground={setBackground}/>
+            <Game2 setStage={setStage} game={Configs.game2} setBackground={setBackground} setRewards={setRewards}/>
           )}
           {Stage === "Game3" && (
-            <Game3 setStage={setStage} game={Configs.game3} setBackground={setBackground}/>
+            <Game3 setStage={setStage} game={Configs.game3} setBackground={setBackground} setRewards={setRewards}/>
           )}
         </>
       )}

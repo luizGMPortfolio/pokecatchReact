@@ -12,7 +12,7 @@ import Navbar from "../../components/Navbar/Navbar";
 
 
 
-const How = () => {
+const How = ({setRewards}) => {
   const { RandonHowPokemons } = useFetchPokemons();
 
   const [num, setNum] = useState();
@@ -43,7 +43,7 @@ const How = () => {
           <h3>Quem é esse</h3>
           <h1>Pokemon?</h1>
         </div>
-        <Game setBackground={setBackground}/>
+        <Game setBackground={setBackground} setRewards={setRewards}/>
       </div>
     </>
   );

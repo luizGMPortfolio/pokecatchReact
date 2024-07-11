@@ -17,10 +17,62 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
   const [pokemon] = useState(game[game[8]]);
   const [pokemons] = useState(game);
 
-  const [ChoiseError, setChoiseError] =useState()
+  const [trys, setTrys] =useState(3);
 
   const CheckChoise = async (choise) => {
-    setBackground('Errado')
+    if (pokemon.name === choise) {
+
+      const pokebola = await RandonPokeball();
+
+      setBackground('Certo')
+      setTimeout(() => {
+        const NewRewards = {
+          pokemon: pokemon,
+          pokebolas: pokebola
+        }
+  
+        setRewards(NewRewards)
+      },400)
+
+
+    }
+    else{
+      var id = document.getElementsByClassName(choise)[0];
+      id.classList.add('errado')
+
+      setTimeout(() => {
+        setBackground('Errado')
+      },300)
+
+
+      switch(trys){
+        case 3 :
+          var ultra = document.getElementsByClassName('ultra')[0];
+          ultra.classList.add('invisibility')
+          setTrys(trys - 1)
+          setTimeout(() => {
+            setBackground('Who')
+          }, 2000)
+          break
+        case 2:
+          var great = document.getElementsByClassName('great')[0];
+          great.classList.add('invisibility')
+          setTrys(trys - 1)
+          var items = document.querySelectorAll('.option');
+    
+          // Adiciona a classe 'new-class' a cada elemento selecionado
+          items.forEach(item => {
+              item.classList.add('LastChance');
+          });
+          break 
+        case 1:
+          var pokeball = document.getElementsByClassName('pokeball')[0];
+          pokeball.classList.add('invisibility')
+          setTrys(trys - 1)
+      }
+
+    }
+    
   };
 
   return (
@@ -43,15 +95,15 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           </div>
           <div className="trys">
             <div className="Box1">
-              <span className="kanit white">Chances</span>
+              <span className="kanit white">{trys === 1 ?'Ultima Chance':'Chances'}</span>
               <ul>
-                <li>
+                <li className="pokeball">
                   <img src={pokeball} alt="" />
                 </li>
-                <li>
+                <li className="great">
                   <img src={great} alt="" />
                 </li>
-                <li>
+                <li className="ultra">
                   <img src={ultra} alt="" />
                 </li>
               </ul>
@@ -61,49 +113,49 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           <div className="choises">
             <ul>
               <li
-                className={pokemons[0].name}
+                className={`${pokemons[0].name} option`}
                 onClick={() => CheckChoise(pokemons[0].name)}
               >
                 {pokemons[0].name}
               </li>
               <li
-                className={pokemons[1].name}
+                className={`${pokemons[1].name} option`}
                 onClick={() => CheckChoise(pokemons[1].name)}
               >
                 {pokemons[1].name}
               </li>
               <li
-                className={pokemons[2].name}
+                className={`${pokemons[2].name} option`}
                 onClick={() => CheckChoise(pokemons[2].name)}
               >
                 {pokemons[2].name}
               </li>
               <li
-                className={pokemons[3].name}
+                className={`${pokemons[3].name} option`}
                 onClick={() => CheckChoise(pokemons[3].name)}
               >
                 {pokemons[3].name}
               </li>
               <li
-                className={pokemons[4].name}
+                className={`${pokemons[4].name} option`}
                 onClick={() => CheckChoise(pokemons[4].name)}
               >
                 {pokemons[4].name}
               </li>
               <li
-                className={pokemons[5].name}
+                className={`${pokemons[5].name} option`}
                 onClick={() => CheckChoise(pokemons[5].name)}
               >
                 {pokemons[5].name}
               </li>
               <li
-                className={pokemons[6].name}
+                className={`${pokemons[6].name} option`}
                 onClick={() => CheckChoise(pokemons[6].name)}
               >
                 {pokemons[6].name}
               </li>
               <li
-                className={pokemons[7].name}
+                className={`${pokemons[7].name} option`}
                 onClick={() => CheckChoise(pokemons[7].name)}
               >
                 {pokemons[7].name}

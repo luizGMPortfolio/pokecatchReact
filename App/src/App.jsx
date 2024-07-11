@@ -46,7 +46,7 @@ function App() {
         <BrowserRouter>
           <div className="container">
             <Routes>
-              <Route path="/" exact element={user ? <How /> : <Navigate to='/login' />} />
+              <Route path="/" exact element={user ? <How setRewards={setRewards}/> : <Navigate to='/login' />} />
               <Route path="/Pokedex" element={user ? <Pokedex /> : <Navigate to='/login' />} />
               <Route path="/Login" element={!user ? <Login /> : <Navigate to='/' />} />
               <Route path="/Register" element={!user ? <Register setRewards={setRewards} /> : <Navigate to='/' />} />

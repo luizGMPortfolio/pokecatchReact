@@ -84,7 +84,7 @@
 .trys img{
     width: 25px;
 }
-.trys ul{
+.trys .Box1 ul{
     height: 100%;
     gap: 10px;
     display: flex;
@@ -98,14 +98,32 @@
 }
 .tip{
     display: flex;
-    background-color: #24242450;
-    border-radius: 10px;
     height: 100%;
-    padding: 5px;
+    gap: 2px;
+
 }
-.tip span{
-    opacity: 0;
+.tip ul{
+
+    border-radius: 10px;
+    margin: 0;
+    display: flex;
+    gap: 1px;
+}
+.tip ul li{
+    background-color: #24242450;
+    width: 20px;
+    border-radius: 5px;
 }
 .choises ul li img{
     width: 70px;
+}
+
+.invisibility{
+    opacity: 0;
+}
+.ContentInvisibility{
+    content-visibility: hidden;
+}
+.LastChance{
+    animation: vibrar 0.3s infinite;
 }
