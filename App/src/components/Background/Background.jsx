@@ -4,7 +4,7 @@ import "./Background.css";
 import Who from "../../assets/Backgrounds/Who.jpg";
 import Errado from "../../assets/Backgrounds/Errado7.jpg";
 import Certo from "../../assets/Backgrounds/Certo.jpg";
-import red from '../../assets/Backgrounds/BackgroundPokedex.jpg'
+import red from '../../assets/Backgrounds/BackgroundPokedex2.jpg'
 
 const Background = ({ type }) => {
   return (

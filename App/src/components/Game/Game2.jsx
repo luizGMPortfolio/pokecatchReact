@@ -29,6 +29,12 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
       setPokemon(game[game[8]])
       setPokemons(game)
     }
+    else if(game === 'Coletado'){
+      setBackground('Certo')
+    }
+    else if(game === 'Sem vidas'){
+      setBackground('Errado')
+    }
   }, [])
 
   useEffect(() => {
@@ -126,10 +132,21 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
 
   return (
     <>
-      {(game === "Coletado" || game === "Sem vidas") && (
+      {game === "Coletado" && (
+        <>
         <div className="cardHow">
           <Card Style={"Back"} />
         </div>
+        <h1 className="Slackey bold gray">Coletado</h1>
+      </>
+      )}
+      {game === "Sem vidas" && (
+        <>
+          <div className="cardHow">
+            <Card Style={"Back"} />
+          </div>
+          <h1 className="Slackey bold gray">Sem vidas</h1>
+        </>
       )}
       {(game != "Coletado" && game != "Sem vidas") && (
         <>

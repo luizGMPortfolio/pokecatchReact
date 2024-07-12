@@ -16,48 +16,51 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
   const [trys, setTrys] = useState(3);
   const [tip, setTip] = useState();
   const [array, setArray] = useState([]);
-  const [Games, setGames] = useState()
+  const [Games, setGames] = useState();
 
-  const {user} =useAuthValue()
+  const { user } = useAuthValue();
   const { RandonPokeball } = useFetchPokemons();
   const { documents, GetDocuments, UpdateDocuments } = useCloud();
 
   useEffect(() => {
-
     async function LoadData() {
       await GetDocuments("Configs", user.uid);
     }
-    if(user){
+    if (user) {
       LoadData();
     }
   }, [user]);
 
   useEffect(() => {
-    if(documents){
-      setGames(documents.Games)
+    if (documents) {
+      setGames(documents.Games);
     }
   }, [documents]);
 
   useEffect(() => {
-    if(game != "Coletado" && game != "Sem vidas"){
-      setTip(game.name.split(""))
+    if (game != "Coletado" && game != "Sem vidas") {
+      setTip(game.name.split(""));
       var Array = [];
-  
-      game.name.split("").map((item) => Array.push([item, "ContentInvisibility"]));
-  
+
+      game.name
+        .split("")
+        .map((item) => Array.push([item, "ContentInvisibility"]));
+
       setArray(Array);
     }
-
+    else if(game === 'Coletado'){
+      setBackground('Certo')
+    }
+    else if(game === 'Sem vidas'){
+      setBackground('Errado')
+    }
   }, []);
 
   const CheckChoise = async (e) => {
     e.preventDefault();
 
-    
     var Array = array;
     var nuns = [];
-
-
 
     if (game.name === name) {
       const pokebola = await RandonPokeball();
@@ -75,13 +78,11 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           Games: {
             game1: "Coletado",
             game2: Games.game2,
-            game3: Games.game3
-          }
+            game3: Games.game3,
+          },
         };
-    
+
         UpdateDocuments("Configs", documents.id, DataItens);
-
-
       }, 400);
     } else {
       switch (trys) {
@@ -96,18 +97,17 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             ultra.classList.add("invisibility");
             setTrys(trys - 1);
 
-
-            for (let index = 0; index < Math.floor(array.length/3); index++) {
-              var num = Math.floor(Math.random() * array.length)
-              var igual = true
-              while(igual){
-                num = Math.floor(Math.random() * array.length)
-                igual = false
+            for (let index = 0; index < Math.floor(array.length / 3); index++) {
+              var num = Math.floor(Math.random() * array.length);
+              var igual = true;
+              while (igual) {
+                num = Math.floor(Math.random() * array.length);
+                igual = false;
                 nuns.map((item) => {
-                  if(num === item ){
-                    igual = true
+                  if (num === item) {
+                    igual = true;
                   }
-                })
+                });
               }
 
               nuns.push(Math.floor(Math.random() * array.length));
@@ -116,13 +116,11 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             Array.map((item, index) =>
               nuns.map((num) => {
                 if (index === num) {
-
                   item[1] = "";
                 }
               })
             );
             setArray(Array);
-
           }, 2000);
           break;
         case 2:
@@ -139,18 +137,17 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               item.classList.add("LastChance");
             });
 
-
-            for (let index = 0; index < Math.floor(array.length/2); index++) {
-              var num = Math.floor(Math.random() * array.length)
-              var igual = true
-              while(igual){
-                num = Math.floor(Math.random() * array.length)
-                igual = false
+            for (let index = 0; index < Math.floor(array.length / 2); index++) {
+              var num = Math.floor(Math.random() * array.length);
+              var igual = true;
+              while (igual) {
+                num = Math.floor(Math.random() * array.length);
+                igual = false;
                 nuns.map((item) => {
-                  if(num === item ){
-                    igual = true
+                  if (num === item) {
+                    igual = true;
                   }
-                })
+                });
               }
 
               nuns.push(Math.floor(Math.random() * array.length));
@@ -159,14 +156,11 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             Array.map((item, index) =>
               nuns.map((num) => {
                 if (index === num) {
-
                   item[1] = "";
                 }
               })
             );
             setArray(Array);
-
-
           }, 2000);
 
           break;
@@ -175,29 +169,39 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           pokeball.classList.add("invisibility");
           setTrys(trys - 1);
 
+          // eslint-disable-next-line no-case-declarations
           const DataItens = {
             Games: {
               game1: "Sem vidas",
               game2: Games.game2,
-              game3: Games.game3
-            }
+              game3: Games.game3,
+            },
           };
-      
-          UpdateDocuments("Configs", documents.id, DataItens);
-    }
 
+          UpdateDocuments("Configs", documents.id, DataItens);
+      }
     }
   };
 
-
   return (
     <>
-      {(game === 'Coletado' || game === "Sem vidas") && (
+      {game === "Coletado" && (
+        <>
         <div className="cardHow">
           <Card Style={"Back"} />
         </div>
+        <h1 className="Slackey bold gray">Coletado</h1>
+      </>
       )}
-      {(game != "Sem vidas" && game != 'Coletado') && (
+      {game === "Sem vidas" && (
+        <>
+          <div className="cardHow">
+            <Card Style={"Back"} />
+          </div>
+          <h1 className="Slackey bold gray">Sem vidas</h1>
+        </>
+      )}
+      {game != "Sem vidas" && game != "Coletado" && (
         <>
           <div className="cardHow">
             <Card
@@ -218,7 +222,9 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           </div>
           <div className="trys G1">
             <div className="Box1">
-              <span className="kanit white">{trys === 1 ?'Ultima Chance':'Chances'}</span>
+              <span className="kanit white">
+                {trys === 1 ? "Ultima Chance" : "Chances"}
+              </span>
               <ul>
                 <li>
                   <img src={pokeball} alt="" className="pokeball" />

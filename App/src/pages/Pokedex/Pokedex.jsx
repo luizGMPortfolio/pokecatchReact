@@ -1,7 +1,6 @@
 //css
 import "./Pokedex.css";
 
-
 //context
 import { useAuthValue } from "../../context/AuthContext";
 //hooks
@@ -31,7 +30,6 @@ function Pokedex() {
   const { documents, GetDocuments } = useCloud();
   const { user } = useAuthValue();
 
-
   useEffect(() => {
     async function LoadData() {
       setPokemons(await LoadDatabase("pokemons"));
@@ -45,6 +43,15 @@ function Pokedex() {
     }
   }, [documents]);
 
+  function VerifyPokemon(id) {
+    var igual = false;
+    cards.map((card) => {
+      if (card.id === id) {
+        igual = true;
+      }
+    });
+    return igual;
+  }
 
   return (
     <>
@@ -245,8 +252,9 @@ function Pokedex() {
               onMouseLeave={() => setShow("")}
             >
               <div
-                className={`select ${Region != "Region" ? Region : "Region"
-                  } Region`}
+                className={`select ${
+                  Region != "Region" ? Region : "Region"
+                } Region`}
               >
                 <h4>{Region}</h4>
               </div>
@@ -274,6 +282,11 @@ function Pokedex() {
             </div>
           </div>
         </div>
+        {cards && pokemons && (
+          <div className="collection">
+            <span>{`${cards.length}/${pokemons.length}`}</span>
+          </div>
+        )}
         <div className="list">
           <div className="abas">
             <div
@@ -296,32 +309,41 @@ function Pokedex() {
                   <>
                     {aba === "all" && (
                       <>
-                        <Card
-                          name={pokemon.name}
-                          img={pokemon.sprite.padrão}
-                          types={pokemon.types}
-                          num={pokemon.id}
-                          Style={"Uncatch"}
-                        />
+                        {VerifyPokemon(pokemon.id) ? (
+                          <Card
+                            name={pokemon.name}
+                            img={pokemon.sprite.padrão}
+                            types={pokemon.types}
+                            num={pokemon.id}
+                          />
+                        ) : (
+                          <Card
+                            name={pokemon.name}
+                            img={pokemon.sprite.padrão}
+                            types={pokemon.types}
+                            num={pokemon.id}
+                            Style={"Uncatch"}
+                          />
+                        )}
                       </>
                     )}
-                    {aba === 'seus' && cards.map((card) => (
-                      <>
-                        {card.id === pokemon.id &&
-                          <>
-                            {cards &&
-                              <Card
-                                name={card.name}
-                                img={card.sprite.padrão}
-                                types={card.types}
-                                num={card.id}
-                              />
-                            }
-
-                          </>
-                        }
-                      </>
-                    ))}
+                    {aba === "seus" &&
+                      cards.map((card) => (
+                        <>
+                          {card.id === pokemon.id && (
+                            <>
+                              {cards && (
+                                <Card
+                                  name={card.name}
+                                  img={card.sprite.padrão}
+                                  types={card.types}
+                                  num={card.id}
+                                />
+                              )}
+                            </>
+                          )}
+                        </>
+                      ))}
                   </>
                 ))}
             </>

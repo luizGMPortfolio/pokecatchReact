@@ -12,11 +12,11 @@ import Game1 from "./Game1";
 import Game3 from "./Game3";
 
 
-const Game = ({setBackground, setRewards}) => {
+const Game = ({setBackground, setRewards, setStage, Stage}) => {
+
   const { documents, GetDocuments } = useCloud();
   const { user } = useAuthValue();
 
-  const [Stage, setStage] = useState("inicial");
   const [Configs, setConfigs] = useState();
 
   useEffect(() => {
@@ -29,14 +29,13 @@ const Game = ({setBackground, setRewards}) => {
     if(documents){
       setConfigs(documents.Games);
     }
-
   }, [documents]);
 
   return (
     <>
       {Configs && (
         <>
-          {Stage === "inicial" && <Inicial setStage={setStage} />}
+          {Stage === "inicial" && <Inicial setStage={setStage} games={Configs}/>}
           {Stage === "Game1" && (
             <Game1
               setStage={setStage}

@@ -13,6 +13,11 @@ import Register from "./pages/auth/Register";
 import Loading from './components/Loading//Loading';
 import Rewards from './components/Rewards/Rewards';
 
+//hooks
+import { useCloud } from "./hooks/useCloud";
+import { useFetchPokemons } from "./hooks/useFetchPokemons";
+import { Time } from "./hooks/useTime";
+
 //context
 import { AuthProvider } from "./context/AuthContext";
 
@@ -20,9 +25,12 @@ function App() {
 
   const [user, setUser] = useState(undefined);
   const [rewards, setRewards] = useState(null);
-  const [NovoDia, setNovoDia] = useState(null);
+  const [DiaAntigo, setDiaAntigo] = useState();
+  const { DiaAtual } = Time();
 
   const { auth } = useAuthentication();
+  const {documents, GetDocuments, UpdateDocuments} = useCloud();
+  const {RandonPokemon, RandonHowPokemons} = useFetchPokemons()
 
   const loadingUser = user === undefined;
 
@@ -31,6 +39,53 @@ function App() {
       setUser(user);
     });
   }, [auth]);
+
+
+  useEffect(() => {
+    async function LoadData() {
+      await GetDocuments("Configs", user.uid);
+    }
+    if(user){
+      LoadData();
+    }
+
+  }, [user]);
+
+  useEffect(() => {
+    if(documents){
+      setDiaAntigo(documents.Date)
+    }
+  }, [documents]);
+
+  useEffect(() => {
+
+    const updateData =  async () => {
+      const game1 = await RandonPokemon();
+      const game2= await RandonHowPokemons();
+      const game3 = await RandonHowPokemons();
+
+      const DataItens = {
+        Date: DiaAtual,
+        Games: {
+          game1,
+          game2,
+          game3
+        }
+      };
+  
+      UpdateDocuments("Configs", documents.id, DataItens);
+
+    }
+    if (user && DiaAntigo) {
+      if(DiaAntigo != DiaAtual){
+        updateData()
+      }
+      
+    }
+  }, [DiaAntigo, user]);
+
+
+
 
   if (loadingUser) {
     return <Loading />;

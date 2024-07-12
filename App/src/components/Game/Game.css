@@ -1,6 +1,6 @@
 
 .Inicial .container{
-    width: 300px;
+    width: 350px;
     height: 400px;
     border-radius: 20px;
     background-color: #24242450;
@@ -10,7 +10,7 @@
 
 }
 .Inicial .container ul{
-    width: 70%;
+    width: 90%;
     height: 70%;
     display: flex;
     flex-direction: column;
@@ -24,15 +24,19 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    gap: 10px;
 }
 .Inicial .container li:hover {
     background-color: #242424;
     cursor: pointer;
     transition: 300ms;
-  }
+}
+.Inicial .container .li span{
+    display: flex;
+    width: 90%;
+}
 .Inicial .container li i{
-    width: 0;
-    scale: 2;
+    display: flex;
     color: #30e065;
 }
 
