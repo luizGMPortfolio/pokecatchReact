@@ -19,7 +19,10 @@
     font-size: 30px;
 }
 .filters {
-    height: 150px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .list {
     height: 80%;
@@ -47,7 +50,7 @@
 
 
 .Search {
-    height: 50%;
+    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;

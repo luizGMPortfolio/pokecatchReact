@@ -63,12 +63,19 @@ const Rewards = ({ rewards, setRewards, user }) => {
       <div>
         {!rewards && <Card Style={"Back"} />}
         {rewards && (
-          <Card
-            name={rewards.pokemon.name}
-            img={rewards.pokemon.sprite.padrão}
-            types={rewards.pokemon.types}
-            num={rewards.pokemon.id}
-          />
+          <div className="ContainerCard flip">
+            <div className="card-front">
+              <Card
+                name={rewards.pokemon.name}
+                img={rewards.pokemon.sprite.padrão}
+                types={rewards.pokemon.types}
+                num={rewards.pokemon.id}
+              />
+            </div>
+            <div className="card-back">
+              <Card Style={"Back"} />
+            </div>
+          </div>
         )}
         <footer className="kanit white">
           <span>+</span>
@@ -81,7 +88,9 @@ const Rewards = ({ rewards, setRewards, user }) => {
         </footer>
       </div>
       <div className="ButtonContainer">
-        <button onClick={handleUpdate} className="btn-default kanit">OK</button>
+        <button onClick={handleUpdate} className="btn-default kanit">
+          OK
+        </button>
       </div>
     </div>
   );

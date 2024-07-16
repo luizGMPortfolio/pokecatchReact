@@ -49,10 +49,16 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
       setArray(Array);
     }
     else if(game === 'Coletado'){
-      setBackground('Certo')
+      setTimeout(() => {
+        setBackground('Certo')
+      }, 1000)
+
     }
     else if(game === 'Sem vidas'){
-      setBackground('Errado')
+      setTimeout(() => {
+        setBackground('Errado')
+      }, 1000)
+
     }
   }, []);
 
@@ -183,27 +189,41 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
     }
   };
 
+
+  const Slide = () => {
+    setBackground('Who')
+    var items = document.querySelectorAll(".SlideAnimationRight");
+    // Adiciona a classe 'new-class' a cada elemento selecionado
+    items.forEach((item) => {
+      item.classList.add("SlideRight");
+    });
+
+    setTimeout(() => {
+      setStage('inicial')
+    }, 1000)
+  }
+
   return (
     <>
       {game === "Coletado" && (
         <>
-        <div className="cardHow">
+        <div className="cardHow SlideAnimationRight">
           <Card Style={"Back"} />
         </div>
-        <h1 className="Slackey bold gray">Coletado</h1>
+        <h1 className="Slackey bold gray SlideAnimationRight">Coletado</h1>
       </>
       )}
       {game === "Sem vidas" && (
         <>
-          <div className="cardHow">
+          <div className="cardHow SlideAnimationRight">
             <Card Style={"Back"} />
           </div>
-          <h1 className="Slackey bold gray">Sem vidas</h1>
+          <h1 className="Slackey bold gray SlideAnimationRight">Sem vidas</h1>
         </>
       )}
       {game != "Sem vidas" && game != "Coletado" && (
         <>
-          <div className="cardHow">
+          <div className="cardHow SlideAnimationRight">
             <Card
               name={game.name}
               img={game.sprite.padrão}
@@ -212,15 +232,15 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               Style={"Ocult"}
             />
           </div>
-          <div className="input">
+          <div className="input Opacity">
             <input
               type="text"
-              className="Slackey option"
+              className="Slackey option Opacity"
               onChange={(e) => setName(e.target.value)}
             />
             <i onClick={CheckChoise} class="fa-solid fa-play option"></i>
           </div>
-          <div className="trys G1">
+          <div className="trys G1 Opacity">
             <div className="Box1">
               <span className="kanit white">
                 {trys === 1 ? "Ultima Chance" : "Chances"}
@@ -250,6 +270,7 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           </div>
         </>
       )}
+      <button className="btn-default Back-btn SlideAnimationRight" onClick={Slide}><i class="fa-solid fa-arrow-left"></i></button>
     </>
   );
 };

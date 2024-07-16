@@ -30,7 +30,7 @@ const How = ({ setRewards }) => {
           Stage={Stage}
         />
         {Stage === "inicial" && (
-          <div className="alert">
+          <div className="alert hub SlideAnimationLeft">
             <span>{horarioAtual}</span>
           </div>
         )}

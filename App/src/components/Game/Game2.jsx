@@ -13,7 +13,6 @@ import great from "../../assets/pokebolas/greatBall.svg";
 import ultra from "../../assets/pokebolas/ultraBall.svg";
 
 const Game1 = ({ setStage, game, setBackground, setRewards }) => {
-
   const { RandonPokeball } = useFetchPokemons();
   const { user } = useAuthValue();
   const { documents, GetDocuments, UpdateDocuments } = useCloud();
@@ -26,19 +25,19 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
 
   useEffect(() => {
     if (game != "Coletado" && "Sem vidas") {
-      setPokemon(game[game[8]])
-      setPokemons(game)
+      setPokemon(game[game[8]]);
+      setPokemons(game);
+    } else if (game === "Coletado") {
+      setTimeout(() => {
+        setBackground("Certo");
+      }, 1000);
+    } else if (game === "Sem vidas") {
+      setTimeout(() => {
+        setBackground("Errado");
+      }, 1000);
     }
-    else if(game === 'Coletado'){
-      setBackground('Certo')
-    }
-    else if(game === 'Sem vidas'){
-      setBackground('Errado')
-    }
-  }, [])
-
+  }, []);
   useEffect(() => {
-
     async function LoadData() {
       await GetDocuments("Configs", user.uid);
     }
@@ -46,113 +45,116 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
       LoadData();
     }
   }, [user]);
-
   useEffect(() => {
     if (documents) {
-      setGames(documents.Games)
+      setGames(documents.Games);
     }
   }, [documents]);
-
   const CheckChoise = async (choise) => {
     if (pokemon.name === choise) {
-
       const pokebola = await RandonPokeball();
 
-      setBackground('Certo')
+      setBackground("Certo");
       setTimeout(() => {
         const NewRewards = {
           pokemon: pokemon,
-          pokebolas: pokebola
-        }
+          pokebolas: pokebola,
+        };
 
-        setRewards(NewRewards)
+        setRewards(NewRewards);
 
         const DataItens = {
           Games: {
             game1: Games.game1,
             game2: "Coletado",
-            game3: Games.game3
-          }
+            game3: Games.game3,
+          },
         };
 
         UpdateDocuments("Configs", documents.id, DataItens);
-
-      }, 400)
-
-
-    }
-    else {
+      }, 400);
+    } else {
       var id = document.getElementsByClassName(choise)[0];
-      id.classList.add('errado')
+      id.classList.add("errado");
 
       setTimeout(() => {
-        setBackground('Errado')
-      }, 300)
-
+        setBackground("Errado");
+      }, 300);
 
       switch (trys) {
         case 3:
-          var ultra = document.getElementsByClassName('ultra')[0];
-          ultra.classList.add('invisibility')
-          setTrys(trys - 1)
+          var ultra = document.getElementsByClassName("ultra")[0];
+          ultra.classList.add("invisibility");
+          setTrys(trys - 1);
           setTimeout(() => {
-            setBackground('Who')
-          }, 2000)
-          break
+            setBackground("Who");
+          }, 2000);
+          break;
         case 2:
-          var great = document.getElementsByClassName('great')[0];
-          great.classList.add('invisibility')
-          setTrys(trys - 1)
-          var items = document.querySelectorAll('.option');
+          var great = document.getElementsByClassName("great")[0];
+          great.classList.add("invisibility");
+          setTrys(trys - 1);
+          var items = document.querySelectorAll(".option");
 
           // Adiciona a classe 'new-class' a cada elemento selecionado
-          items.forEach(item => {
-            item.classList.add('LastChance');
+          items.forEach((item) => {
+            item.classList.add("LastChance");
           });
-          break
+          break;
         case 1:
-          var pokeball = document.getElementsByClassName('pokeball')[0];
-          pokeball.classList.add('invisibility')
-          setTrys(trys - 1)
+          var pokeball = document.getElementsByClassName("pokeball")[0];
+          pokeball.classList.add("invisibility");
+          setTrys(trys - 1);
 
           const DataItens = {
             Games: {
               game1: Games.game1,
               game2: "Sem vidas",
-              game3: Games.game3
-            }
+              game3: Games.game3,
+            },
           };
 
           UpdateDocuments("Configs", documents.id, DataItens);
       }
-
     }
-
   };
+
+  const Slide = () => {
+    setBackground('Who')
+    var items = document.querySelectorAll(".SlideAnimationRight");
+    // Adiciona a classe 'new-class' a cada elemento selecionado
+    items.forEach((item) => {
+      item.classList.add("SlideRight");
+    });
+
+    setTimeout(() => {
+      setStage('inicial')
+    }, 1000)
+  }
 
   return (
     <>
       {game === "Coletado" && (
         <>
-        <div className="cardHow">
-          <Card Style={"Back"} />
-        </div>
-        <h1 className="Slackey bold gray">Coletado</h1>
-      </>
+          <div className="cardHow SlideAnimationRight">
+            <Card Style={"Back"} />
+          </div>
+          <h1 className="Slackey bold gray SlideAnimationRight">Coletado</h1>
+        </>
       )}
       {game === "Sem vidas" && (
         <>
-          <div className="cardHow">
+          <div className="cardHow SlideAnimationRight">
             <Card Style={"Back"} />
           </div>
-          <h1 className="Slackey bold gray">Sem vidas</h1>
+          <h1 className="Slackey bold gray SlideAnimationRight">Sem vidas</h1>
         </>
       )}
-      {(game != "Coletado" && game != "Sem vidas") && (
+      {game != "Coletado" && game != "Sem vidas" && (
         <>
           {pokemon && (
             <>
-              <div className="cardHow">
+              <div className="cardHow SlideAnimationRight">
                 <Card
                   name={pokemon.name}
                   img={pokemon.sprite.padrão}
@@ -161,9 +163,11 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
                   Style={"Ocult"}
                 />
               </div>
-              <div className="trys">
+              <div className="trys Opacity">
                 <div className="Box1">
-                  <span className="kanit white">{trys === 1 ? 'Ultima Chance' : 'Chances'}</span>
+                  <span className="kanit white">
+                    {trys === 1 ? "Ultima Chance" : "Chances"}
+                  </span>
                   <ul>
                     <li className="pokeball">
                       <img src={pokeball} alt="" />
@@ -176,9 +180,8 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
                     </li>
                   </ul>
                 </div>
-
               </div>
-              <div className="choises">
+              <div className="choises Opacity">
                 <ul>
                   <li
                     className={`${pokemons[0].name} option`}
@@ -232,9 +235,14 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               </div>
             </>
           )}
-
         </>
       )}
+      <button
+        className="btn-default Back-btn SlideAnimationRight"
+        onClick={Slide}
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
     </>
   );
 };

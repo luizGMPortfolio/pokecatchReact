@@ -5,6 +5,7 @@ import "./Card.css";
 import Backcard from "../../assets/Backgrounds/pokecatchBackcard.png";
 
 function Card({ name, img, types, num, Style, setInfo, quantidade, backcard }) {
+
   function Rederect() {
     setInfo(num);
   }
@@ -39,7 +40,6 @@ function Card({ name, img, types, num, Style, setInfo, quantidade, backcard }) {
           )}
         </div>
       )}
-
       {Style == "Uncatch" && (
         <div className="card ocult">
           <div className="name">

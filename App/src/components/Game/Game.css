@@ -69,7 +69,6 @@
     font-size: 20px;
     color: #111111;
 }
-
 .trys{
     gap: 20px;
     display: flex;
@@ -82,7 +81,6 @@
     flex-direction: column;
     text-align: center;
 }
-
 .trys img{
     width: 25px;
 }
@@ -105,7 +103,6 @@
 
 }
 .tip ul{
-
     border-radius: 10px;
     margin: 0;
     display: flex;
@@ -120,6 +117,8 @@
     width: 70px;
 }
 
+
+
 .invisibility{
     opacity: 0;
 }
@@ -132,4 +131,52 @@
 
 .G1{
     margin-bottom: 100px;
+}
+
+
+.SlideLeft{
+    transform: translateX(-1000px);
+    transition: 1s !important;
+}
+.SlideRight{
+    transform: translateX(1000px);
+    transition: 1s !important;
+}
+
+.SlideAnimationRight{
+    transition: 200ms;
+    animation: SlideAnimationRight 1s;
+}
+@keyframes SlideAnimationRight {
+    0%{
+        transform: translateX(1000px);
+        
+    }
+    100%{
+        
+    }
+}
+
+.SlideAnimationLeft{
+    transition: 200ms;
+    animation: SlideAnimationLeft 1s;
+}
+@keyframes SlideAnimationLeft {
+    0%{
+        transform: translateX(-1000px);
+        
+    }
+    100%{
+        
+    }
+}
+
+.Opacity{
+    transition: 1s;
+    animation: Opacity 1s;
+}
+@keyframes Opacity {
+    0%{
+        opacity: 0;
+    }
 }
