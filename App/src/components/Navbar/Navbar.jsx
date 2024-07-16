@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 //imports
 
 import interrogação from '../../assets/Icones/interrogação.png'
-import pokedex from '../../assets/Icones/Cards4.png'
+import pokedex from '../../assets/Icones/cards1.png'
 
 
 
