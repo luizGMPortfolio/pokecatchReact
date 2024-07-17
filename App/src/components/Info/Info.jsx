@@ -2,7 +2,7 @@ import './Info.css'
 
 import { useState, useEffect } from "react"
 import { useFetchPokemons } from "../../hooks/useFetchPokemons"
-import { IoClose } from "react-icons/io5";
+
 
 const Info = ({ num, setInfo }) => {
 
@@ -256,7 +256,7 @@ const Info = ({ num, setInfo }) => {
                 <>
                     <div className='header'>
                         <span>N°{pokemon.id}</span>
-                        <button onClick={handleButton}><IoClose /></button>
+                        <button onClick={handleButton} className='btn-default'>X</button>
                     </div>
                     <img src={pokemon.sprites.other["official-artwork"].front_default} alt="" />
                     <h3>{pokemon.name}</h3>

@@ -13,7 +13,7 @@ function Card({ name, img, types, num, Style, setInfo, quantidade, backcard }) {
   return (
     <>
       {!Style && (
-        <div className="card" onClick={Rederect}>
+        <div className="card pointer" onClick={Rederect}>
           <div className="name">
             <h3 style={{ fontSize: `${name.lenght > 12 ? "11px" : "15px"}` }}>
               {name}

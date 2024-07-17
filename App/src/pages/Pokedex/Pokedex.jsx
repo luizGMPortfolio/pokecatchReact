@@ -13,15 +13,13 @@ import { useCloud } from "../../hooks/useCloud";
 import Navbar from "../../components/Navbar/Navbar";
 import Background from "../../components/Background/Background";
 import Card from "../../components/Card/Card";
-
+import Info from '../../components/Info/Info'
 //context
 
 function Pokedex() {
-  const [show, setShow] = useState("");
-  const [type, setType] = useState("type");
-  const [Gen, setGen] = useState("Generations");
-  const [Region, setRegion] = useState("Region");
+
   const [aba, setAba] = useState("seus");
+  const [info, setInfo] = useState(null)
 
   const [pokemons, setPokemons] = useState();
   const [cards, setCards] = useState([]);
@@ -51,6 +49,10 @@ function Pokedex() {
       }
     });
     return igual;
+  }
+
+  if (info) {
+    return <Info num={info} setInfo={setInfo} />
   }
 
   return (
@@ -91,6 +93,7 @@ function Pokedex() {
                             img={pokemon.sprite.padrão}
                             types={pokemon.types}
                             num={pokemon.id}
+                            setInfo={setInfo}
                           />
                         ) : (
                           <Card
@@ -114,6 +117,7 @@ function Pokedex() {
                                   img={card.sprite.padrão}
                                   types={card.types}
                                   num={card.id}
+                                  setInfo={setInfo}
                                 />
                               )}
                             </>
