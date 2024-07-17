@@ -47,18 +47,14 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
         .map((item) => Array.push([item, "ContentInvisibility"]));
 
       setArray(Array);
-    }
-    else if(game === 'Coletado'){
+    } else if (game === "Coletado") {
       setTimeout(() => {
-        setBackground('Certo')
-      }, 1000)
-
-    }
-    else if(game === 'Sem vidas'){
+        setBackground("Certo");
+      }, 1000);
+    } else if (game === "Sem vidas") {
       setTimeout(() => {
-        setBackground('Errado')
-      }, 1000)
-
+        setBackground("Errado");
+      }, 1000);
     }
   }, []);
 
@@ -103,11 +99,11 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             ultra.classList.add("invisibility");
             setTrys(trys - 1);
 
-            for (let index = 0; index < Math.floor(array.length / 3); index++) {
-              var num = Math.floor(Math.random() * array.length);
+            for (let index = 0; index < Math.ceil(array.length / 3); index++) {
+              var num = Math.ceil(Math.random() * array.length);
               var igual = true;
               while (igual) {
-                num = Math.floor(Math.random() * array.length);
+                num = Math.ceil(Math.random() * array.length);
                 igual = false;
                 nuns.map((item) => {
                   if (num === item) {
@@ -116,7 +112,7 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
                 });
               }
 
-              nuns.push(Math.floor(Math.random() * array.length));
+              nuns.push(Math.ceil(Math.random() * array.length));
             }
 
             Array.map((item, index) =>
@@ -134,20 +130,17 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             setBackground("Errado");
           }, 300);
           setTimeout(() => {
+            setBackground("Who");
             var great = document.getElementsByClassName("great")[0];
             great.classList.add("invisibility");
             setTrys(trys - 1);
-            var items = document.querySelectorAll(".option");
-            // Adiciona a classe 'new-class' a cada elemento selecionado
-            items.forEach((item) => {
-              item.classList.add("LastChance");
-            });
 
-            for (let index = 0; index < Math.floor(array.length / 2); index++) {
-              var num = Math.floor(Math.random() * array.length);
+
+            for (let index = 0; index < Math.ceil(array.length / 2); index++) {
+              var num = Math.ceil(Math.random() * array.length);
               var igual = true;
               while (igual) {
-                num = Math.floor(Math.random() * array.length);
+                num = Math.ceil(Math.random() * array.length);
                 igual = false;
                 nuns.map((item) => {
                   if (num === item) {
@@ -156,7 +149,7 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
                 });
               }
 
-              nuns.push(Math.floor(Math.random() * array.length));
+              nuns.push(Math.ceil(Math.random() * array.length));
             }
 
             Array.map((item, index) =>
@@ -171,10 +164,52 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
 
           break;
         case 1:
-          var pokeball = document.getElementsByClassName("pokeball")[0];
-          pokeball.classList.add("invisibility");
-          setTrys(trys - 1);
+          setTimeout(() => {
+            setBackground("Errado");
+          }, 300);
 
+          setTimeout(() => {
+
+            var pokeball = document.getElementsByClassName("pokeball")[0];
+            pokeball.classList.add("invisibility");
+            setTrys(trys - 1);
+  
+            var items = document.querySelectorAll(".option");
+            // Adiciona a classe 'new-class' a cada elemento selecionado
+            items.forEach((item) => {
+              item.classList.add("LastChance");
+            });
+
+            for (let index = 0; index < Math.ceil(array.length / 2); index++) {
+              var num = Math.ceil(Math.random() * array.length);
+              var igual = true;
+              while (igual) {
+                num = Math.ceil(Math.random() * array.length);
+                igual = false;
+                nuns.map((item) => {
+                  if (num === item) {
+                    igual = true;
+                  }
+                });
+              }
+
+              nuns.push(Math.ceil(Math.random() * array.length));
+            }
+
+            Array.map((item, index) =>
+              nuns.map((num) => {
+                if (index === num) {
+                  item[1] = "";
+                }
+              })
+            );
+            setArray(Array);
+          }, 2000);
+          
+          break;
+        case 0:
+
+          setTrys(trys - 1);
           // eslint-disable-next-line no-case-declarations
           const DataItens = {
             Games: {
@@ -189,9 +224,8 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
     }
   };
 
-
   const Slide = () => {
-    setBackground('Who')
+    setBackground("Who");
     var items = document.querySelectorAll(".SlideAnimationRight");
     // Adiciona a classe 'new-class' a cada elemento selecionado
     items.forEach((item) => {
@@ -199,19 +233,19 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
     });
 
     setTimeout(() => {
-      setStage('inicial')
-    }, 1000)
-  }
+      setStage("inicial");
+    }, 1000);
+  };
 
   return (
     <>
       {game === "Coletado" && (
         <>
-        <div className="cardHow SlideAnimationRight">
-          <Card Style={"Back"} />
-        </div>
-        <h1 className="Slackey bold gray SlideAnimationRight">Coletado</h1>
-      </>
+          <div className="cardHow SlideAnimationRight">
+            <Card Style={"Back"} />
+          </div>
+          <h1 className="Slackey bold gray SlideAnimationRight">Coletado</h1>
+        </>
       )}
       {game === "Sem vidas" && (
         <>
@@ -243,7 +277,7 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           <div className="trys G1 Opacity">
             <div className="Box1">
               <span className="kanit white">
-                {trys === 1 ? "Ultima Chance" : "Chances"}
+                {trys === 0 ? "Ultima Chance" : "Chances"}
               </span>
               <ul>
                 <li>
@@ -270,7 +304,12 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           </div>
         </>
       )}
-      <button className="btn-default Back-btn SlideAnimationRight" onClick={Slide}><i class="fa-solid fa-arrow-left"></i></button>
+      <button
+        className="btn-default Back-btn SlideAnimationRight"
+        onClick={Slide}
+      >
+        <i class="fa-solid fa-arrow-left"></i>
+      </button>
     </>
   );
 };

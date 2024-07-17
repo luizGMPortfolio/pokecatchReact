@@ -42,7 +42,7 @@ const Login = () => {
 
 
     return (
-        <div className='auth'>
+        <div className='auth kanit'>
             <div className='logo'>
                 <img src={logo} alt="" />
             </div>

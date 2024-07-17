@@ -58,11 +58,6 @@ function Pokedex() {
       <Background type={"Pokedex"} />
       <Navbar />
       <div className="pokedex">
-        <div className="filters">
-          <div className="Search">
-            <input type="text" placeholder="Search" />
-          </div>
-        </div>
         {cards && pokemons && (
           <div className="collection">
             <span>{`${cards.length}/${pokemons.length}`}</span>

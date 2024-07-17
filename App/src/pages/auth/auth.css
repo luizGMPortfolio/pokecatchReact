@@ -55,7 +55,7 @@
     cursor: pointer;
   }
   
-  .Login .register {
+  .Login ,.register {
     color: #202020;
     margin: 10px 0;
     width: 100%;
@@ -63,3 +63,6 @@
     justify-content: center;
     align-items: center;
   }
+
+
+  .register{display: flex;}

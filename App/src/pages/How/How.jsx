@@ -3,16 +3,20 @@ import "./How.css";
 import { useEffect, useState } from "react";
 
 import { Time } from "../../hooks/useTime";
+import { useFetchPokemons } from "../../hooks/useFetchPokemons";
 
 import Background from "../../components/Background/Background";
 import Game from "../../components/Game/Game";
 import Navbar from "../../components/Navbar/Navbar";
 
 const How = ({ setRewards }) => {
+
   const { horarioAtual } = Time();
+  const { FetchAllPokemons } = useFetchPokemons();
 
   const [background, setBackground] = useState("Who");
   const [Stage, setStage] = useState("inicial");
+
 
   return (
     <>

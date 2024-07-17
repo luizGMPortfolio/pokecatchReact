@@ -11,7 +11,6 @@ import interrogação from '../../assets/Icones/interrogação.png'
 import pokedex from '../../assets/Icones/cards1.png'
 
 
-
 const Navbar = () => {
   return (
     <div className='header'>

@@ -7,11 +7,10 @@ import { useDatabase } from "./useDatabase";
 //imports
 import axios from "axios";
 
-import pokebola from '../assets/pokebolas/padão.svg'
-import greatBall from '../assets/pokebolas/greatBall.svg'
-import ultraBall from '../assets/pokebolas/ultraBall.svg'
-import masterBall from '../assets/pokebolas/masterBall.svg'
-
+import pokebola from "../assets/pokebolas/padão.svg";
+import greatBall from "../assets/pokebolas/greatBall.svg";
+import ultraBall from "../assets/pokebolas/ultraBall.svg";
+import masterBall from "../assets/pokebolas/masterBall.svg";
 
 export const useFetchPokemons = () => {
   const { LoadDatabase } = useDatabase();
@@ -19,6 +18,8 @@ export const useFetchPokemons = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(null);
   const [Filters, setFilters] = useState({});
+
+  const [damages, setDamages] = useState();
   const filters = {
     bug: [],
     electric: [],
@@ -90,6 +91,13 @@ export const useFetchPokemons = () => {
           responseSpecies.data.evolution_chain.url
         );
 
+        var DataType = [];
+        responsePoke.data.types.map(async (type) => {
+          DataType.push(await FetchPokemon(null, null, type.type.url));
+        });
+        setDamages(DataType)
+
+
         //GetPokemon
         var dataType = [];
         responsePoke.data.types.map((type) => {
@@ -107,13 +115,28 @@ export const useFetchPokemons = () => {
           types: dataType,
           class: GetClass(responseSpecies.data),
           stage: GetEvolveStage(responseEvolves, responsePoke.data),
+          evolves: await GetEvolvesChain(responseEvolves),
+          varieties: await GetVarieties(responseSpecies.data),
+          moves: GetMoves(responsePoke.data.moves),
+          abilities: GetAbilities(responsePoke.data.abilities),
+          stats: {
+            hp: responsePoke.data.stats[0].base_stat,
+            attack: responsePoke.data.stats[1].base_stat,
+            defense: responsePoke.data.stats[2].base_stat,
+            specialAttack: responsePoke.data.stats[3].base_stat,
+            specialDefense: responsePoke.data.stats[4].base_stat,
+            speed: responsePoke.data.stats[5].base_stat,
+          },
+          base_happiness: responseSpecies.data.base_happiness,
+          capture_rate: responseSpecies.data.capture_rate,
+          height: responsePoke.data.height,
+          weight: responsePoke.data.weight,
+          copies: 0
         });
         //GetSpecie
       }
 
       set(ref(database, "pokemons"), data);
-
-      console.log(data)
     } catch (error) {
       console.log(error);
     }
@@ -139,6 +162,135 @@ export const useFetchPokemons = () => {
     } else {
       return "final";
     }
+  };
+  const GetEvolvesChain = async (evolves) => {
+    const ChainEvolves = [];
+
+    ChainEvolves.push(evolves.chain.species.name);
+
+    if (evolves.chain.evolves_to.length != 0) {
+      ChainEvolves.push(evolves.chain.evolves_to[0].species.name);
+
+      if (evolves.chain.evolves_to[0].evolves_to.length != 0) {
+        ChainEvolves.push(
+          evolves.chain.evolves_to[0].evolves_to[0].species.name
+        );
+      }
+    }
+
+    return ChainEvolves;
+  };
+  const GetVarieties = async (specie) => {
+    var data = "No varieties";
+
+    specie.varieties.map(async (varietie) => {
+      if (varietie.is_default == false) {
+        data = [];
+        const pokemon = await FetchPokemon(null, null, varietie.pokemon.url);
+
+        var dataType = [];
+        pokemon.types.map((type) => {
+          dataType.push(type.type.name);
+        });
+
+        data.push({
+          name: pokemon.name,
+          id: pokemon.id,
+          sprite: {
+            padrão: pokemon.sprites.other["official-artwork"].front_default,
+            shiny: pokemon.sprites.other["official-artwork"].front_shiny,
+          },
+          types: dataType,
+        });
+      }
+    });
+
+    return data;
+  };
+  const GetMoves = (moves) => {
+    const data = [];
+    moves.map((item) => {
+      data.push({
+        name: item.move.name,
+        learn_method: item.version_group_details[0].move_learn_method.name,
+        level_learned_at: item.version_group_details[0].level_learned_at,
+      });
+    });
+    return data;
+  };
+  const GetAbilities = (abilities) => {
+    const data = [];
+
+    abilities.map((item) => {
+      data.push(item.ability.name);
+    });
+
+    return data;
+  };
+
+  function GetVeryEfective() {
+    const types = [];
+    damages.map((damage) => {
+      damage.damage_relations.double_damage_to.map((type) => {
+        types.push(type.name);
+      });
+    });
+    const veryEfective = types.filter(
+      (item, index) => types.indexOf(item) === index
+    );
+
+    return veryEfective
+  }
+  function GetResistence() {
+    const types = [];
+    damages.map((damage) => {
+      damage.damage_relations.half_damage_from.map((type) => {
+         types.push(type.name);
+      });
+    });
+    const DoubleResistence = types.filter(
+      (item, index) =>
+        types.indexOf(item) !== types.lastIndexOf(item) &&
+        types.indexOf(item) === index
+    );
+    const resistence = getUniqueItems(types);
+    return {DoubleResistence, resistence}
+  }
+  function GetLowEffective() {
+    const types = [];
+    damages.map((damage) => {
+      damage.damage_relations.half_damage_to.map((type) => {
+        types.push(type.name);
+      });
+    });
+    const VeryEfective = types.filter(
+      (item, index) => types.indexOf(item) === index
+    );
+    return VeryEfective
+  }
+  function GetLowResistence() {
+    const types = [];
+    damages.map((damage) => {
+      damage.damage_relations.double_damage_from.map((type) => {
+        types.push(type.name);
+      });
+    });
+    const DoubleResistence = types.filter(
+      (item, index) =>
+        types.indexOf(item) !== types.lastIndexOf(item) &&
+        types.indexOf(item) === index
+    );
+    const resistence = getUniqueItems(types);
+
+    return {DoubleResistence, resistence}
+  }
+  const getUniqueItems = (arr) => {
+    const counts = arr.reduce((acc, item) => {
+      acc[item] = (acc[item] || 0) + 1;
+      return acc;
+    }, {});
+
+    return arr.filter((item) => counts[item] === 1);
   };
 
   //Busca URL pokeApi
@@ -173,8 +325,8 @@ export const useFetchPokemons = () => {
     }
     setLoading(true);
     try {
-      const response = await LoadDatabase('pokemons')
-      console.log(response)
+      const response = await LoadDatabase("pokemons");
+
       return response[RandonNumber(1025)];
     } catch (error) {
       console.log(error);
@@ -190,19 +342,19 @@ export const useFetchPokemons = () => {
 
     try {
       const response = [];
-      const Data = await LoadDatabase('pokemons')
+      const Data = await LoadDatabase("pokemons");
 
       for (let index = 0; index < 8; index++) {
-        const num = RandonNumber(Data.length)
+        const num = RandonNumber(Data.length);
 
         Data.map((item) => {
-          if(item.id === num){
-            response.push(item)
+          if (item.id === num) {
+            response.push(item);
           }
-        })
+        });
       }
-      response.push(RandonNumber(8))
-      
+      response.push(RandonNumber(8));
+
       return response;
     } catch (error) {
       console.log(error);
@@ -263,14 +415,20 @@ export const useFetchPokemons = () => {
           },
         };
       }
-  
+
       return data;
     } catch (error) {
       console.log(error);
     }
-  
   };
 
-
-  return { FetchPokemon, RandonHowPokemons, RandonPokemon, RandonPokeball, FetchAllPokemons, loading, error };
+  return {
+    FetchPokemon,
+    RandonHowPokemons,
+    RandonPokemon,
+    RandonPokeball,
+    FetchAllPokemons,
+    loading,
+    error,
+  };
 };
