@@ -13,13 +13,12 @@ import { useCloud } from "../../hooks/useCloud";
 import Navbar from "../../components/Navbar/Navbar";
 import Background from "../../components/Background/Background";
 import Card from "../../components/Card/Card";
-import Info from '../../components/Info/Info'
+import Info from "../../components/Info/Info";
 //context
 
 function Pokedex() {
-
   const [aba, setAba] = useState("seus");
-  const [info, setInfo] = useState(null)
+  const [info, setInfo] = useState(null);
 
   const [pokemons, setPokemons] = useState();
   const [cards, setCards] = useState([]);
@@ -52,7 +51,7 @@ function Pokedex() {
   }
 
   if (info) {
-    return <Info num={info} setInfo={setInfo} />
+    return <Info num={info} setInfo={setInfo} />;
   }
 
   return (
@@ -60,9 +59,15 @@ function Pokedex() {
       <Background type={"Pokedex"} />
       <Navbar />
       <div className="pokedex">
-        {cards && pokemons && (
+        {cards && pokemons ? (
           <div className="collection">
             <span>{`${cards.length}/${pokemons.length}`}</span>
+          </div>
+        ) : (
+          <div className="collection">
+            <span className="flex-center">
+              <div className="blur"></div>/<div className="blur"></div>
+            </span>
           </div>
         )}
         <div className="list">
@@ -126,6 +131,22 @@ function Pokedex() {
                       ))}
                   </>
                 ))}
+              {!pokemons && (
+                <>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                  <Card Style={'blur'}/>
+                </>
+              )}
             </>
           </div>
         </div>

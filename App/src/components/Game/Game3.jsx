@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable react/prop-types */
 import Card from "../Card/Card";
 
@@ -18,12 +19,12 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
 
   const [pokemon, setPokemon] = useState();
   const [pokemons, setPokemons] = useState();
-
+  const [array, setArray] = useState(["", "", "", "", "", "", "", ""]);
   const [trys, setTrys] = useState(3);
   const [Games, setGames] = useState();
 
   useEffect(() => {
-    if (game != "Coletado" && "Sem vidas") {
+    if (game != "Coletado" && game != "Sem vidas") {
       setPokemon(game[game[8]]);
       setPokemons(game);
     } else if (game === "Coletado") {
@@ -34,6 +35,42 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
       setTimeout(() => {
         setBackground("Errado");
       }, 1000);
+    }
+
+    if (localStorage.getItem("Game3") == null) {
+      let Game3 = [trys, array];
+
+      // Converta o array para uma string JSON
+      let arrayString = JSON.stringify(Game3);
+
+      // Armazene a string no Local Storage
+      localStorage.setItem("Game3", arrayString);
+    } else {
+      let arrayString = JSON.parse(localStorage.getItem("Game3"));
+      setTrys(arrayString[0]);
+      setArray(arrayString[1]);
+
+
+      setTimeout(() => {
+        if (arrayString[0] === 2) {
+          let ultra = document.getElementsByClassName("ultra")[0];
+          ultra.classList.add("invisibility");
+        }
+        if (arrayString[0] === 1) {
+          setBackground("Errado");
+          let ultra = document.getElementsByClassName("ultra")[0];
+          let great = document.getElementsByClassName("great")[0];
+          ultra.classList.add("invisibility");
+          great.classList.add("invisibility");
+
+          var items = document.querySelectorAll(".option");
+
+          // Adiciona a classe 'new-class' a cada elemento selecionado
+          items.forEach((item) => {
+            item.classList.add("LastChance");
+          });
+        }
+      }, [100]);
     }
   }, []);
   useEffect(() => {
@@ -51,72 +88,96 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
   }, [documents]);
 
   const CheckChoise = async (choise) => {
-    if (pokemon.name === choise) {
-      const pokebola = await RandonPokeball();
-
-      setBackground("Certo");
-      setTimeout(() => {
-        const NewRewards = {
-          pokemon: pokemon,
-          pokebolas: pokebola,
-        };
-
-        setRewards(NewRewards);
-
-        const DataItens = {
-          Games: {
-            game1: Games.game1,
-            game2: Games.game2,
-            game3: "Coletado",
-          },
-        };
-
-        UpdateDocuments("Configs", documents.id, DataItens);
-      }, 400);
-    } else {
-      var id = document.getElementsByClassName(choise)[0];
-      id.classList.add("errado");
-
-      setTimeout(() => {
-        setBackground("Errado");
-      }, 300);
-
-      switch (trys) {
-        case 3:
-          var ultra = document.getElementsByClassName("ultra")[0];
-          ultra.classList.add("invisibility");
-          setTrys(trys - 1);
-          setTimeout(() => {
-            setBackground("Who");
-          }, 2000);
-          break;
-        case 2:
-          var great = document.getElementsByClassName("great")[0];
-          great.classList.add("invisibility");
-          setTrys(trys - 1);
-          var items = document.querySelectorAll(".option");
-
-          // Adiciona a classe 'new-class' a cada elemento selecionado
-          items.forEach((item) => {
-            item.classList.add("LastChance");
-          });
-          break;
-        case 1:
-          var pokeball = document.getElementsByClassName("pokeball")[0];
-          pokeball.classList.add("invisibility");
-          setTrys(trys - 1);
-
+    if(array[choise] != 'errado'){
+      if (pokemon.name === pokemons[choise].name) {
+        const pokebola = await RandonPokeball();
+  
+        setBackground("Certo");
+        setTimeout(() => {
+          const NewRewards = {
+            pokemon: pokemon,
+            pokebolas: pokebola,
+          };
+  
+          setRewards(NewRewards);
+  
           const DataItens = {
             Games: {
               game1: Games.game1,
               game2: Games.game2,
-              game3: "Sem vidas",
+              game3: "Coletado",
             },
           };
-
+  
           UpdateDocuments("Configs", documents.id, DataItens);
+        }, 400);
+      } else {
+        changeOption(choise);
+  
+        setTimeout(() => {
+          setBackground("Errado");
+        }, 300);
+  
+        switch (trys) {
+          case 3:
+            var ultra = document.getElementsByClassName("ultra")[0];
+            ultra.classList.add("invisibility");
+            setTrys(trys - 1);
+            setTimeout(() => {
+              setBackground("Who");
+  
+              let Game3 = [trys - 1, array];
+  
+              // Converta o array para uma string JSON
+              let arrayString = JSON.stringify(Game3);
+  
+              // Armazene a string no Local Storage
+              localStorage.setItem("Game3", arrayString);
+            }, 2000);
+            break;
+          case 2:
+            var great = document.getElementsByClassName("great")[0];
+            great.classList.add("invisibility");
+            setTrys(trys - 1);
+            var items = document.querySelectorAll(".option");
+  
+            // Adiciona a classe 'new-class' a cada elemento selecionado
+            items.forEach((item) => {
+              item.classList.add("LastChance");
+            });
+  
+            let Game3 = [trys - 1, array];
+  
+            // Converta o array para uma string JSON
+            let arrayString = JSON.stringify(Game3);
+  
+            // Armazene a string no Local Storage
+            localStorage.setItem("Game3", arrayString);
+  
+            break;
+          case 1:
+            var pokeball = document.getElementsByClassName("pokeball")[0];
+            pokeball.classList.add("invisibility");
+            setTrys(trys - 1);
+  
+            const DataItens = {
+              Games: {
+                game1: Games.game1,
+                game2: Games.game2,
+                game3: "Sem vidas",
+              },
+            };
+  
+            UpdateDocuments("Configs", documents.id, DataItens);
+        }
       }
     }
+  };
+
+  const changeOption = (option) => {
+    var Array = array;
+    Array[option] = "errado";
+    setArray(Array);
   };
 
   const Slide = () => {
@@ -184,50 +245,50 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               <div className="choises">
                 <ul>
                   <li
-                    className={`${pokemons[0].name} option`}
-                    onClick={() => CheckChoise(pokemons[0].name)}
+                    className={`${array[0]} option`}
+                    onClick={() => CheckChoise(0)}
                   >
                     <img src={pokemons[0].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[1].name} option`}
-                    onClick={() => CheckChoise(pokemons[1].name)}
+                    className={`${array[1]} option`}
+                    onClick={() => CheckChoise(1)}
                   >
                     <img src={pokemons[1].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[2].name} option`}
-                    onClick={() => CheckChoise(pokemons[2].name)}
+                    className={`${array[2]} option`}
+                    onClick={() => CheckChoise(2)}
                   >
                     <img src={pokemons[2].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[3].name} option`}
-                    onClick={() => CheckChoise(pokemons[3].name)}
+                    className={`${array[3]} option`}
+                    onClick={() => CheckChoise(3)}
                   >
                     <img src={pokemons[3].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[4].name} option`}
-                    onClick={() => CheckChoise(pokemons[4].name)}
+                    className={`${array[4]} option`}
+                    onClick={() => CheckChoise(4)}
                   >
                     <img src={pokemons[4].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[5].name} option`}
-                    onClick={() => CheckChoise(pokemons[5].name)}
+                    className={`${array[5]} option`}
+                    onClick={() => CheckChoise(5)}
                   >
                     <img src={pokemons[5].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[6].name} option`}
-                    onClick={() => CheckChoise(pokemons[6].name)}
+                    className={`${array[6]} option`}
+                    onClick={() => CheckChoise(6)}
                   >
                     <img src={pokemons[6].sprite.padrão} alt="" />
                   </li>
                   <li
-                    className={`${pokemons[7].name} option`}
-                    onClick={() => CheckChoise(pokemons[7].name)}
+                    className={`${array[7]} option`}
+                    onClick={() => CheckChoise(7)}
                   >
                     <img src={pokemons[7].sprite.padrão} alt="" />
                   </li>

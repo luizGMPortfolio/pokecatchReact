@@ -56,6 +56,38 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
         setBackground("Errado");
       }, 1000);
     }
+
+    if (localStorage.getItem("Game1") == null) {
+      let Game1 = [trys, Array];
+
+      // Converta o array para uma string JSON
+      let arrayString = JSON.stringify(Game1);
+
+      // Armazene a string no Local Storage
+      localStorage.setItem("Game1", arrayString);
+    }else{
+      let arrayString = JSON.parse(localStorage.getItem("Game1"));
+      setTrys(arrayString[0])
+      setArray(arrayString[1])
+
+      var ultra = document.getElementsByClassName("ultra")[0];
+      var great = document.getElementsByClassName("great")[0];
+      var pokeball = document.getElementsByClassName("pokeball")[0];
+
+      if(arrayString[0] === 2){
+        ultra.classList.add("invisibility");
+      }
+      if(arrayString[0] === 1){
+        ultra.classList.add("invisibility");
+        great.classList.add("invisibility");
+      }
+      if(arrayString[0] === 0){
+        setBackground('Errado')
+        ultra.classList.add("invisibility");
+        great.classList.add("invisibility");
+        pokeball.classList.add("invisibility");
+      }
+    }
   }, []);
 
   const CheckChoise = async (e) => {
@@ -114,7 +146,6 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
 
               nuns.push(Math.ceil(Math.random() * array.length));
             }
-
             Array.map((item, index) =>
               nuns.map((num) => {
                 if (index === num) {
@@ -123,6 +154,15 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               })
             );
             setArray(Array);
+
+            let Game1 = [trys-1, Array];
+
+            // Converta o array para uma string JSON
+            let arrayString = JSON.stringify(Game1);
+      
+            // Armazene a string no Local Storage
+            localStorage.setItem("Game1", arrayString);
+
           }, 2000);
           break;
         case 2:
@@ -134,7 +174,6 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             var great = document.getElementsByClassName("great")[0];
             great.classList.add("invisibility");
             setTrys(trys - 1);
-
 
             for (let index = 0; index < Math.ceil(array.length / 2); index++) {
               var num = Math.ceil(Math.random() * array.length);
@@ -160,6 +199,15 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               })
             );
             setArray(Array);
+
+
+            let Game1 = [trys-1, Array];
+
+            // Converta o array para uma string JSON
+            let arrayString = JSON.stringify(Game1);
+      
+            // Armazene a string no Local Storage
+            localStorage.setItem("Game1", arrayString);
           }, 2000);
 
           break;
@@ -169,11 +217,10 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           }, 300);
 
           setTimeout(() => {
-
             var pokeball = document.getElementsByClassName("pokeball")[0];
             pokeball.classList.add("invisibility");
             setTrys(trys - 1);
-  
+
             var items = document.querySelectorAll(".option");
             // Adiciona a classe 'new-class' a cada elemento selecionado
             items.forEach((item) => {
@@ -204,11 +251,19 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
               })
             );
             setArray(Array);
+
+            let Game1 = [trys-1, Array];
+
+            // Converta o array para uma string JSON
+            let arrayString = JSON.stringify(Game1);
+      
+            // Armazene a string no Local Storage
+            localStorage.setItem("Game1", arrayString);
+
           }, 2000);
-          
+
           break;
         case 0:
-
           setTrys(trys - 1);
           // eslint-disable-next-line no-case-declarations
           const DataItens = {
@@ -221,6 +276,8 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
 
           UpdateDocuments("Configs", documents.id, DataItens);
       }
+
+
     }
   };
 

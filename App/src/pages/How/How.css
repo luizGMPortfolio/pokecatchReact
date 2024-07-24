@@ -5,7 +5,9 @@
   flex-direction: column;
   justify-content: start;
   align-items: center;
-
+  background: url('./assets/Backgrounds/Who.jpg');
+  background-position: center;
+  background-size: cover;
 }
 
 .title {

@@ -236,3 +236,8 @@
     font-weight: 300;
     color: #bdbdbd;
 }
+
+
+.loadingCard{
+    animation: blur 600ms infinite;
+}

@@ -113,6 +113,9 @@ function Card({ name, img, types, num, Style, setInfo, quantidade, backcard }) {
           <img src={img} alt="" />
         </div>
       )}
+      {Style === 'blur' && (
+        <div className="card loadingCard"></div>
+      )}
     </>
   );
 }

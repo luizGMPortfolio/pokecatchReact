@@ -5,8 +5,13 @@ import Who from "../../assets/Backgrounds/Who.jpg";
 import Errado from "../../assets/Backgrounds/Errado7.jpg";
 import Certo from "../../assets/Backgrounds/Certo.jpg";
 import red from '../../assets/Backgrounds/BackgroundPokedex2.jpg'
+import { useEffect } from "react";
+
+
 
 const Background = ({ type }) => {
+
+  
   return (
     <>
       {type === "Who" && <img src={Who} alt="" className="back" />}

@@ -5,6 +5,7 @@
 	min-height: 100vh;
 	width: 100%;
 	transition: 400ms;
+	background-color: #1066e7;
 }
 .back img{
 	width: 100%;
