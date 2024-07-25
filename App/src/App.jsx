@@ -79,6 +79,9 @@ function App() {
     if (user && DiaAntigo) {
       if(DiaAntigo != DiaAtual){
         updateData()
+        localStorage.removeItem('Game1')
+        localStorage.removeItem('Game2')
+        localStorage.removeItem('Game3')
       }
       
     }

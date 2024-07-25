@@ -47,6 +47,39 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
         .map((item) => Array.push([item, "ContentInvisibility"]));
 
       setArray(Array);
+
+      if (localStorage.getItem("Game1") == null) {
+        let Game1 = [trys, Array];
+  
+        // Converta o array para uma string JSON
+        let arrayString = JSON.stringify(Game1);
+  
+        // Armazene a string no Local Storage
+        localStorage.setItem("Game1", arrayString);
+      }else{
+        let arrayString = JSON.parse(localStorage.getItem("Game1"));
+        setTrys(arrayString[0])
+        setArray(arrayString[1])
+  
+        var ultra = document.getElementsByClassName("ultra")[0];
+        var great = document.getElementsByClassName("great")[0];
+        var pokeball = document.getElementsByClassName("pokeball")[0];
+  
+        if(arrayString[0] === 2){
+          ultra.classList.add("invisibility");
+        }
+        if(arrayString[0] === 1){
+          ultra.classList.add("invisibility");
+          great.classList.add("invisibility");
+        }
+        if(arrayString[0] === 0){
+          setBackground('Errado')
+          ultra.classList.add("invisibility");
+          great.classList.add("invisibility");
+          pokeball.classList.add("invisibility");
+        }
+      }
+
     } else if (game === "Coletado") {
       setTimeout(() => {
         setBackground("Certo");
@@ -57,37 +90,7 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
       }, 1000);
     }
 
-    if (localStorage.getItem("Game1") == null) {
-      let Game1 = [trys, Array];
 
-      // Converta o array para uma string JSON
-      let arrayString = JSON.stringify(Game1);
-
-      // Armazene a string no Local Storage
-      localStorage.setItem("Game1", arrayString);
-    }else{
-      let arrayString = JSON.parse(localStorage.getItem("Game1"));
-      setTrys(arrayString[0])
-      setArray(arrayString[1])
-
-      var ultra = document.getElementsByClassName("ultra")[0];
-      var great = document.getElementsByClassName("great")[0];
-      var pokeball = document.getElementsByClassName("pokeball")[0];
-
-      if(arrayString[0] === 2){
-        ultra.classList.add("invisibility");
-      }
-      if(arrayString[0] === 1){
-        ultra.classList.add("invisibility");
-        great.classList.add("invisibility");
-      }
-      if(arrayString[0] === 0){
-        setBackground('Errado')
-        ultra.classList.add("invisibility");
-        great.classList.add("invisibility");
-        pokeball.classList.add("invisibility");
-      }
-    }
   }, []);
 
   const CheckChoise = async (e) => {
@@ -117,6 +120,8 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
         };
 
         UpdateDocuments("Configs", documents.id, DataItens);
+
+        localStorage.removeItem('Game1')
       }, 400);
     } else {
       switch (trys) {
@@ -275,6 +280,10 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           };
 
           UpdateDocuments("Configs", documents.id, DataItens);
+
+          localStorage.removeItem('Game1')
+
+          break
       }
 
 

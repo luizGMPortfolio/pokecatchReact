@@ -27,6 +27,42 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
     if (game != "Coletado" && game != "Sem vidas") {
       setPokemon(game[game[8]]);
       setPokemons(game);
+
+      if (localStorage.getItem("Game3") == null) {
+        let Game3 = [trys, array];
+  
+        // Converta o array para uma string JSON
+        let arrayString = JSON.stringify(Game3);
+  
+        // Armazene a string no Local Storage
+        localStorage.setItem("Game3", arrayString);
+      } else {
+        let arrayString = JSON.parse(localStorage.getItem("Game3"));
+        setTrys(arrayString[0]);
+        setArray(arrayString[1]);
+  
+  
+        setTimeout(() => {
+          if (arrayString[0] === 2) {
+            let ultra = document.getElementsByClassName("ultra")[0];
+            ultra.classList.add("invisibility");
+          }
+          if (arrayString[0] === 1) {
+            setBackground("Errado");
+            let ultra = document.getElementsByClassName("ultra")[0];
+            let great = document.getElementsByClassName("great")[0];
+            ultra.classList.add("invisibility");
+            great.classList.add("invisibility");
+  
+            var items = document.querySelectorAll(".option");
+  
+            // Adiciona a classe 'new-class' a cada elemento selecionado
+            items.forEach((item) => {
+              item.classList.add("LastChance");
+            });
+          }
+        }, [100]);
+      }
     } else if (game === "Coletado") {
       setTimeout(() => {
         setBackground("Certo");
@@ -37,41 +73,7 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
       }, 1000);
     }
 
-    if (localStorage.getItem("Game3") == null) {
-      let Game3 = [trys, array];
 
-      // Converta o array para uma string JSON
-      let arrayString = JSON.stringify(Game3);
-
-      // Armazene a string no Local Storage
-      localStorage.setItem("Game3", arrayString);
-    } else {
-      let arrayString = JSON.parse(localStorage.getItem("Game3"));
-      setTrys(arrayString[0]);
-      setArray(arrayString[1]);
-
-
-      setTimeout(() => {
-        if (arrayString[0] === 2) {
-          let ultra = document.getElementsByClassName("ultra")[0];
-          ultra.classList.add("invisibility");
-        }
-        if (arrayString[0] === 1) {
-          setBackground("Errado");
-          let ultra = document.getElementsByClassName("ultra")[0];
-          let great = document.getElementsByClassName("great")[0];
-          ultra.classList.add("invisibility");
-          great.classList.add("invisibility");
-
-          var items = document.querySelectorAll(".option");
-
-          // Adiciona a classe 'new-class' a cada elemento selecionado
-          items.forEach((item) => {
-            item.classList.add("LastChance");
-          });
-        }
-      }, [100]);
-    }
   }, []);
   useEffect(() => {
     async function LoadData() {
@@ -110,6 +112,8 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
           };
   
           UpdateDocuments("Configs", documents.id, DataItens);
+
+          localStorage.removeItem('Game3')
         }, 400);
       } else {
         changeOption(choise);
@@ -169,6 +173,10 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
             };
   
             UpdateDocuments("Configs", documents.id, DataItens);
+
+            localStorage.removeItem('Game3')
+
+            break;
         }
       }
     }
