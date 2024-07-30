@@ -13,12 +13,12 @@ const Background = ({ type }) => {
 
   
   return (
-    <>
-      {type === "Who" && <img src={Who} alt="" className="back" />}
+    <div className="Background">
+      {type === "Who" && <img src={Who} alt="" className="back who" />}
       {type === "Errado" && <img src={Errado} alt="" className="back" />}
       {type === "Certo" && <img src={Certo} alt="" className="back" />}
-      {type === "Pokedex" && <img src={red} alt="" className="back" />}
-    </>
+      {type === "Pokedex" && <div className="red"></div>}
+    </div>
   );
 };
 

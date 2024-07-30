@@ -1,21 +1,38 @@
-.back{
-    position: fixed;
-	z-index: -1;
-	width: 100%;
-	min-height: 100vh;
-	width: 100%;
-	transition: 400ms;
-	background-color: #1066e7;
-}
-.back img{
-	width: 100%;
-	
+.Background {
+  position: fixed;
+  z-index: -1;
+  background-color: #1066e7;
+  width: 100%;
+  min-height: 100vh;
 }
 
-.red{
-	position: fixed;
-	z-index: -1;
-	width: 100%;
-	min-height: 100vh;
-	background-color: brown;
+.back {
+  transition: 400ms;
+  background-color: #1066e7;
+  width: 100%;
+  height: 100%;
+}
+.back img {
+  width: 100%;
+}
+
+.red {
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(252, 61, 61);
+}
+
+.who {
+  animation: fadein 1s;
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
 }

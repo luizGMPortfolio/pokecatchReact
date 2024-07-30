@@ -102,6 +102,8 @@ const Game1 = ({ setStage, game, setBackground, setRewards }) => {
     if (game.name === name) {
       const pokebola = await RandonPokeball();
 
+      
+
       setBackground("Certo");
       setTimeout(() => {
         const NewRewards = {

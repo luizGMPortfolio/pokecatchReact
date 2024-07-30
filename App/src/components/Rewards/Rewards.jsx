@@ -30,14 +30,34 @@ const Rewards = ({ rewards, setRewards, user }) => {
 
   useEffect(() => {
     if (documents) {
-      setCards([...documents.cards, rewards.pokemon]);
-      setPokebolas({
-        pokebola:
-          documents.pokebolas.pokebola + rewards.pokebolas.pokebolas.pokebola,
-        great: documents.pokebolas.great + rewards.pokebolas.pokebolas.great,
-        ultra: documents.pokebolas.ultra + rewards.pokebolas.pokebolas.ultra,
-        master: documents.pokebolas.master + rewards.pokebolas.pokebolas.master,
+      var copie = false
+      documents.cards.map((item) => {
+        if (item.name === rewards.pokemon.name) {
+          item.copies = item.copies + 1;
+          copie = true
+        }
       });
+
+      if(copie){
+        setCards([...documents.cards]);
+        setPokebolas({
+          pokebola:
+            documents.pokebolas.pokebola + rewards.pokebolas.pokebolas.pokebola,
+          great: documents.pokebolas.great + rewards.pokebolas.pokebolas.great,
+          ultra: documents.pokebolas.ultra + rewards.pokebolas.pokebolas.ultra,
+          master: documents.pokebolas.master + rewards.pokebolas.pokebolas.master,
+        });
+      }else{
+        setCards([...documents.cards, rewards.pokemon]);
+        setPokebolas({
+          pokebola:
+            documents.pokebolas.pokebola + rewards.pokebolas.pokebolas.pokebola,
+          great: documents.pokebolas.great + rewards.pokebolas.pokebolas.great,
+          ultra: documents.pokebolas.ultra + rewards.pokebolas.pokebolas.ultra,
+          master: documents.pokebolas.master + rewards.pokebolas.pokebolas.master,
+        });
+      }
+
     }
   }, [documents]);
 
